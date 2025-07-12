@@ -217,11 +217,11 @@
               aria-labelledby="navbarDropdownUser">
               <div class="card position-relative border-0">
                 <div class="card-body p-0">
-                  <div class="text-center pt-4 pb-3">
+                  <div v-if="user" class="text-center pt-4 pb-3">
                     <div class="avatar avatar-xl">
                       <img class="rounded-circle" src="/assets/img/team/72x72/57.webp" alt="" />
                     </div>
-                    <h6 class="mt-2 text-body-emphasis">Jerry Seinfield</h6>
+                    <h6  class="mt-2 text-body-emphasis">{{ user.nom }}</h6>
                   </div>
                   <div class="mb-3 mx-3">
                     <input class="form-control form-control-sm" id="statusUpdateInput" type="text"
@@ -278,12 +278,14 @@
                     </li>
                   </ul>
                   <hr />
-                  <div class="px-3">
-                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!">
-                      <span class="me-2" data-feather="log-out"></span>
-                      Sign out
-                    </a>
-                  </div>
+                 <div class="px-3">
+  <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#" @click="logout_client">
+  <span class="me-2" data-feather="log-out"></span>
+  Sign outss
+</a>
+
+</div>
+
                   <div class="my-2 text-center fw-bold fs-10 text-body-quaternary">
                     <a class="text-body-quaternary me-1" href="#!">Privacy policy</a>
                     &bull;
@@ -301,32 +303,62 @@
 
     <div class="content">
       <slot />
+<footer class="footer position-absolute">
+  <div class="row g-0 justify-content-between align-items-center h-100">
+    <div class="col-12 col-sm-auto text-center">
+      <p class="mb-0 mt-2 mt-sm-0 text-body">
+        Site créé avec passion par <strong><a href="/" @click.prevent="reloadHome">R7il</a></strong>
+        <span class="d-none d-sm-inline-block mx-1">|</span>
+        &copy; 2025
+      </p>
+    </div>
+    <div class="col-12 col-sm-auto text-center">
+      <p class="mb-0 text-body-tertiary text-opacity-85">Version 1.0</p>
+    </div>
+  </div>
+</footer>
 
-      <footer class="footer position-absolute">
-        <div class="row g-0 justify-content-between align-items-center h-100">
-          <div class="col-12 col-sm-auto text-center">
-            <p class="mb-0 mt-2 mt-sm-0 text-body">
-              Thank you for creating with Phoenix
-              <span class="d-none d-sm-inline-block"></span>
-              <span class="d-none d-sm-inline-block mx-1">|</span>
-              <br class="d-sm-none" />
-              2025 &copy;
-              <a class="mx-1" href="https://themewagon.com">Themewagon</a>
-            </p>
-          </div>
-          <div class="col-12 col-sm-auto text-center">
-            <p class="mb-0 text-body-tertiary text-opacity-85">v1.23.0</p>
-          </div>
-        </div>
-      </footer>
     </div>
 
 
   </main>
 </template>
 
-<script>
-export default {
-  name: 'DashboardClient',
+<script setup>
+import { onMounted, ref } from 'vue'
+import axios from '@/axios' // Ton axios avec interceptor du token
+import { useRouter } from 'vue-router'
+
+const user = ref(null)
+const error = ref('')
+const router = useRouter()
+const reloadHome = () => {
+  window.location.href = '/'; // recharge complète
+}
+
+// Récupérer les données du transporteur connecté
+onMounted(async () => {
+  try {
+    const res = await axios.get('/transporteur/profil_client')
+    user.value = res.data
+  } catch (err) {
+    error.value = 'Session expirée. Veuillez vous reconnecter.'
+    localStorage.removeItem('transporteur_token')
+    setTimeout(() => {
+      window.location.href = '/login_client'
+    }, 1500)
+  }
+})
+
+// Déconnexion
+const logout_client = async () => {
+  try {
+    await axios.post('/transporteur/logout_client')
+    localStorage.removeItem('transporteur_token')
+    window.location.href = '/login_client'
+  } catch (err) {
+    console.error('Erreur lors de la déconnexion :', err)
+    window.location.href = '/login_client'
+  }
 }
 </script>

@@ -66,7 +66,7 @@
             <!-- Bouton d’action -->
             <div class="header-buttons d-none d-sm-inline-block">
               <router-link
-                to="/login_register"
+                to="/login_client"
                 data-scrollto="#slider"
                 data-offset="-80"
                 class="button button-rounded button-white button-light button-small m-0"

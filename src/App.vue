@@ -20,7 +20,10 @@ export default {
 
       const dashboardLayoutRoutes = [
         '/dashboard_client',
-        '/login_client'
+        '/login_client',
+        '/register_client',
+        '/forgot_password_client',
+        '/reset_password'
       ]
 
       // Vérifie la route actuelle et retourne le layout approprié
