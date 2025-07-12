@@ -123,6 +123,11 @@
 </template>
 
 <script setup>
+
+defineOptions({
+  name: 'LoginClient'
+})
+
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 

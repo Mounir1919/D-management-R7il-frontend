@@ -325,13 +325,13 @@
 </template>
 
 <script setup>
+
+
 import { onMounted, ref } from 'vue'
 import axios from '@/axios' // Ton axios avec interceptor du token
-import { useRouter } from 'vue-router'
 
 const user = ref(null)
 const error = ref('')
-const router = useRouter()
 const reloadHome = () => {
   window.location.href = '/'; // recharge complète
 }

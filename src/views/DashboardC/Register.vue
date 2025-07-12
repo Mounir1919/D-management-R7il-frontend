@@ -125,6 +125,11 @@
 </template>
 
 <script setup>
+
+defineOptions({
+  name: 'RegisterClient'
+})
+
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
