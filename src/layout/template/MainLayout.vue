@@ -38,7 +38,7 @@ export default {
       if (!document.getElementById('main-layout-css')) {
         const link = document.createElement('link')
         link.rel = 'stylesheet'
-        link.href = '/assets/template/css/main-layout.css' // 💡 adapter si nécessaire
+        link.href = '/main-layout.css' // 💡 adapter si nécessaire
         link.id = 'main-layout-css'
         document.head.appendChild(link)
       }

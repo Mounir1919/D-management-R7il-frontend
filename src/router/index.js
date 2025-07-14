@@ -32,7 +32,7 @@ const routes = [
   { path: '/register_client', component: register_client },
   { path: '/reset_password', component: ResetPassword },
   { path: '/forgot_password_client', component: ForgotPassword },
-  { path: '/client', component: client },
+  { path: '/edit_client', component: client },
   {
     path: '/google-login-success',
     name: 'GoogleLoginSuccess',
