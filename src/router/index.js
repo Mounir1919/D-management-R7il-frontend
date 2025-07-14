@@ -13,6 +13,7 @@ import login_client from '@/views/DashboardC/Login.vue'
 import register_client from '@/views/DashboardC/Register.vue'
 import ResetPassword from '@/views/DashboardC/ResetPassword.vue'
 import ForgotPassword from '@/views/DashboardC/ForgotPassword.vue'
+import client from '@/views/DashboardC/Profile.vue'
 
 //admin views
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
@@ -31,6 +32,7 @@ const routes = [
   { path: '/register_client', component: register_client },
   { path: '/reset_password', component: ResetPassword },
   { path: '/forgot_password_client', component: ForgotPassword },
+  { path: '/edit_client', component: client },
   {
     path: '/google-login-success',
     name: 'GoogleLoginSuccess',

@@ -8,15 +8,18 @@ import { onMounted } from 'vue'
 import { usePhoenixNavbarLayout } from '@/composables/usePhoenixNavbarLayout'
 
 const stylesheets = [
-  'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap',
+   'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap',
   '/vendors/simplebar/simplebar.min.css',
   '/assets/css/line.css',
   '/assets/css/theme.min.css',
   '/assets/css/user.min.css',
   '/vendors/leaflet/leaflet.css',
+  '/assets/css/theme-rtl',
+  '/assets/css/user-rtl.min.css',
   '/vendors/leaflet.markercluster/MarkerCluster.css',
   '/vendors/leaflet.markercluster/MarkerCluster.Default.css'
 ]
+
 
 const scripts = [
   '/vendors/simplebar/simplebar.min.js',

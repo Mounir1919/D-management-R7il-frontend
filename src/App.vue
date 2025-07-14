@@ -6,12 +6,17 @@
 
 <script>
 import MainLayout from './layout/template/MainLayout.vue'
-import DashboardLayout from '@/layout/template/DashboardLayout.vue'
+import DashboardLayout from './layout/template/DashboardLayout.vue'
 
 export default {
   computed: {
     layout() {
-      const mainLayoutRoutes = ['/', '/presentation', '/transporteur', '/contact']
+      const mainLayoutRoutes = [
+        '/',
+        '/presentation',
+        '/transporteur',
+        '/contact',
+      ]
 
       const dashboardLayoutRoutes = [
         '/dashboard_client',
@@ -19,24 +24,19 @@ export default {
         '/register_client',
         '/forgot_password_client',
         '/reset_password',
-        '/admin/dashboard',
-        '/admin/login',
+        '/edit_client'
       ]
 
-      // Vérifie la route actuelle et retourne le layout approprié
       if (mainLayoutRoutes.includes(this.$route.path)) {
-        return 'MainLayout'
+        return MainLayout
       } else if (dashboardLayoutRoutes.includes(this.$route.path)) {
-        return 'DashboardLayout'
+        return DashboardLayout
       }
 
-      // Layout par défaut si aucun ne correspond
-      return 'MainLayout'
-    },
-  },
-  components: {
-    MainLayout,
-    DashboardLayout,
-  },
+      return MainLayout
+    }
+  }
 }
 </script>
+
+<!-- ❌ AUCUN CSS GLOBAL ICI -->
