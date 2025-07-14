@@ -168,11 +168,8 @@
 
 <script>
 export default {
-  name: 'AppHeader',
+  name: 'HeaderTemplate',
 }
 </script>
 
-<style>
-@import '@/assets/template/css/global.css';
-</style>
 

@@ -6,7 +6,7 @@
 
 <script>
 import MainLayout from './layout/template/MainLayout.vue'
-import DashboardLayout from '@/layout/template/DashboardLayout.vue'
+import DashboardLayout from './layout/template/DashboardLayout.vue'
 
 export default {
   computed: {
@@ -23,23 +23,20 @@ export default {
         '/login_client',
         '/register_client',
         '/forgot_password_client',
-        '/reset_password'
+        '/reset_password',
+        '/client'
       ]
 
-      // Vérifie la route actuelle et retourne le layout approprié
       if (mainLayoutRoutes.includes(this.$route.path)) {
-        return 'MainLayout'
+        return MainLayout
       } else if (dashboardLayoutRoutes.includes(this.$route.path)) {
-        return 'DashboardLayout'
+        return DashboardLayout
       }
 
-      // Layout par défaut si aucun ne correspond
-      return 'MainLayout'
+      return MainLayout
     }
-  },
-  components: {
-    MainLayout,
-    DashboardLayout
   }
 }
 </script>
+
+<!-- ❌ AUCUN CSS GLOBAL ICI -->
