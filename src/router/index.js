@@ -14,6 +14,9 @@ import register_client from '@/views/DashboardC/Register.vue'
 import ResetPassword from '@/views/DashboardC/ResetPassword.vue'
 import ForgotPassword from '@/views/DashboardC/ForgotPassword.vue'
 
+//admin views
+import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
+import AdminLogin from '@/views/admin/Login.vue'
 const routes = [
   // Public/template views
   { path: '/', component: HomePage },
@@ -33,6 +36,17 @@ const routes = [
     name: 'GoogleLoginSuccess',
     component: () => import('@/views/GoogleLoginSuccess.vue'),
   },
+  //Admin routes
+  {
+    path: '/admin/dashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard,
+    meta: {
+      requiresAuth: true, // Only allow logged-in users
+      requiresAdmin: true, //   // Only allow admin users
+    },
+  },
+  { path: '/admin/login', name: 'AdminLogin', component: AdminLogin },
 ]
 
 const router = createRouter({
