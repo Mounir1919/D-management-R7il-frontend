@@ -1,42 +1,43 @@
 <template>
-  <component :is="layout">
+  <component v-if="ready" :is="layout">
     <router-view />
   </component>
 </template>
 
-<script>
+<script setup>
+import { shallowRef, watch, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
 import MainLayout from './layout/template/MainLayout.vue'
 import DashboardLayout from './layout/template/DashboardLayout.vue'
 
-export default {
-  computed: {
-    layout() {
-      const mainLayoutRoutes = [
-        '/',
-        '/presentation',
-        '/transporteur',
-        '/contact',
-      ]
+const route = useRoute()
+const layout = shallowRef(MainLayout)
+const ready = ref(false)
 
-      const dashboardLayoutRoutes = [
-        '/dashboard_client',
-        '/login_client',
-        '/register_client',
-        '/forgot_password_client',
-        '/reset_password',
-        '/edit_client'
-      ]
+const mainLayoutRoutes = [
+  '/', '/presentation', '/transporteur', '/contact'
+]
 
-      if (mainLayoutRoutes.includes(this.$route.path)) {
-        return MainLayout
-      } else if (dashboardLayoutRoutes.includes(this.$route.path)) {
-        return DashboardLayout
-      }
+const dashboardLayoutRoutes = [
+  '/dashboard_client', '/login_client', '/register_client',
+  '/forgot_password_client', '/reset_password', '/edit_client'
+]
 
-      return MainLayout
-    }
+const setLayout = (path) => {
+  if (mainLayoutRoutes.includes(path)) {
+    layout.value = MainLayout
+  } else if (dashboardLayoutRoutes.includes(path)) {
+    layout.value = DashboardLayout
+  } else {
+    layout.value = MainLayout
   }
+  ready.value = true
 }
-</script>
 
-<!-- ❌ AUCUN CSS GLOBAL ICI -->
+setLayout(route.path)
+
+watch(() => route.path, (newPath) => {
+  setLayout(newPath)
+})
+</script>
