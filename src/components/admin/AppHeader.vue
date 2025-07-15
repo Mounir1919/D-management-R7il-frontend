@@ -29,10 +29,9 @@
             <li class="nav-item">
               <!-- label-->
               <p class="navbar-vertical-label">Pages</p>
-              <hr class="navbar-vertical-line" />
-              <!-- parent pages-->
 
-              <!-- parent pages-->
+              <hr class="navbar-vertical-line" />
+              <!-- auth pages-->
               <div class="nav-item-wrapper">
                 <a
                   class="nav-link dropdown-indicator label-1"
@@ -110,7 +109,162 @@
                   </ul>
                 </div>
               </div>
-              <!-- parent pages-->
+              <!-- gestion client-->
+              <div class="nav-item-wrapper">
+                <a
+                  class="nav-link dropdown-indicator label-1"
+                  href="#nv-client"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="nv-client"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown-indicator-icon-wrapper">
+                      <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                    </div>
+                    <span class="nav-link-icon"><span data-feather="lock"></span></span>
+                    <span class="nav-link-text">Gestion Client</span>
+                  </div>
+                </a>
+                <div class="parent-wrapper label-1">
+                  <ul
+                    class="nav collapse parent"
+                    data-bs-parent="#navbarVerticalCollapse"
+                    id="nv-client"
+                  >
+                    <li class="collapsed-nav-item-title d-none">Gestion Client</li>
+
+                    <li class="nav-item">
+                      <router-link class="nav-link" to="/admin/liste-clients">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Liste des clients</span>
+                        </div>
+                      </router-link>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-up.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign up</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-out.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Details client</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/forgot-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Forgot password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/reset-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Reset password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/lock-screen.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Lock screen</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/2FA.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">2FA</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- gestion transporteur-->
+              <div class="nav-item-wrapper">
+                <a
+                  class="nav-link dropdown-indicator label-1"
+                  href="#nv-transporteur"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="nv-transporteur"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown-indicator-icon-wrapper">
+                      <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                    </div>
+                    <span class="nav-link-icon"><span data-feather="lock"></span></span>
+                    <span class="nav-link-text">Gestion Transporteur</span>
+                  </div>
+                </a>
+                <div class="parent-wrapper label-1">
+                  <ul
+                    class="nav collapse parent"
+                    data-bs-parent="#navbarVerticalCollapse"
+                    id="nv-transporteur"
+                  >
+                    <li class="collapsed-nav-item-title d-none">Authentication</li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-in.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign in</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-up.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign up</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-out.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign out</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/forgot-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Forgot password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/reset-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Reset password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/lock-screen.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Lock screen</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/2FA.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">2FA</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
@@ -142,8 +296,12 @@
           <a class="navbar-brand me-1 me-sm-3" href="index-1.html">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="/assets/img/icons/logo.png" alt="phoenix" width="27" />
-                <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5>
+                <img
+                  src="/src/assets/DashboardC/assets/img/logos/logo-white.png"
+                  alt="R7IL"
+                  width="150"
+                />
+                <h5 class="logo-text ms-2 d-none d-sm-block"></h5>
               </div>
             </div>
           </a>
@@ -362,10 +520,10 @@
                     <a
                       class="btn btn-phoenix-secondary d-flex flex-center w-100"
                       href="#"
-                      @click="logout_client"
+                      @click="logoutAdmin"
                     >
                       <span class="me-2" data-feather="log-out"></span>
-                      Sign outss
+                      Se Déconnecter
                     </a>
                   </div>
 
@@ -405,39 +563,25 @@
   </main>
 </template>
 
-<script setup>
-//import { onMounted, ref } from 'vue'
-//import axios from '@/axios' // Ton axios avec interceptor du token
+<script>
+export default {
+  methods: {
+    logoutAdmin() {
+      const token = localStorage.getItem('token')
 
-// const user = ref(null)
-// const error = ref('')
-// const reloadHome = () => {
-//   window.location.href = '/'; // recharge complète
-// }
-
-// Récupérer les données du transporteur connecté
-// onMounted(async () => {
-//   try {
-//     const res = await axios.get('/transporteur/profil_client')
-//     user.value = res.data
-//   } catch (err) {
-//     error.value = 'Session expirée. Veuillez vous reconnecter.'
-//     localStorage.removeItem('transporteur_token')
-//     setTimeout(() => {
-//       window.location.href = '/login_client'
-//     }, 1500)
-//   }
-// })
-
-// // Déconnexion
-// const logout_client = async () => {
-//   try {
-//     await axios.post('/transporteur/logout_client')
-//     localStorage.removeItem('transporteur_token')
-//     window.location.href = '/login_client'
-//   } catch (err) {
-//     console.error('Erreur lors de la déconnexion :', err)
-//     window.location.href = '/login_client'
-//   }
-// }
+      fetch('http://127.0.0.1:8000/api/admin/logout', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }).finally(() => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        this.$router.push('/admin/login')
+      })
+    },
+  },
+}
 </script>
