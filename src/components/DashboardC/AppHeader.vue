@@ -210,7 +210,19 @@
             <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown"
               data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
               <div class="avatar avatar-l">
-                <img class="rounded-circle" src="/assets/img/team/40x40/57.webp" alt="" />
+                <input
+  type="file"
+  id="avatarUpload"
+  class="d-none"
+  @change="handlePhotoProfil"
+/>
+<label class="cursor-pointer avatar avatar-l" for="avatarUpload">
+  <img
+    class="rounded-circle"
+    :src="previewPhotoProfil || photoProfilUrl"
+    alt="Photo de profil"
+/>
+</label>
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
@@ -219,22 +231,45 @@
                 <div class="card-body p-0">
                   <div v-if="user" class="text-center pt-4 pb-3">
                     <div class="avatar avatar-xl">
-                      <img class="rounded-circle" src="/assets/img/team/72x72/57.webp" alt="" />
+                      <input
+  type="file"
+  id="avatarUpload"
+  class="d-none"
+  @change="handlePhotoProfil"
+/>
+<label class="cursor-pointer avatar avatar-l" for="avatarUpload">
+  <img
+    class="rounded-circle"
+    :src="previewPhotoProfil || photoProfilUrl"
+    alt="Photo de profil"
+/>
+</label>
                     </div>
                     <h6  class="mt-2 text-body-emphasis">{{ user.nom }}</h6>
                   </div>
-                  <div class="mb-3 mx-3">
-                    <input class="form-control form-control-sm" id="statusUpdateInput" type="text"
-                      placeholder="Update your status" />
-                  </div>
+             <div class="mb-3 mx-3" v-if="user">
+  <select
+    class="form-select form-select-sm"
+    v-model="user.status"
+    @change="updateStatus"
+  >
+    <option value="disponible">Disponible</option>
+    <option value="indisponible">Indisponible</option>
+  </select>
+
+  <div v-if="statusMessage" class="alert alert-success mt-2 p-2 py-1">
+    {{ statusMessage }}
+  </div>
+</div>
+
                 </div>
                 <div class="overflow-auto scrollbar" style="height: 10rem">
                   <ul class="nav d-flex flex-column mb-2 pb-1">
                     <li class="nav-item">
-                      <router-link class="nav-link px-3 d-block" to="/profile_client">
+                      <a class="nav-link px-3 d-block" href="/edit_client" @click.prevent="reloadprofile">
                         <span class="me-2 text-body align-bottom" data-feather="user"></span>
                         <span>Profile</span>
-                      </router-link>
+                      </a>
                     </li>
                     <li class="nav-item">
                       <router-link class="nav-link px-3 d-block" to='/'>
@@ -281,9 +316,7 @@
         &copy; 2025
       </p>
     </div>
-    <div class="col-12 col-sm-auto text-center">
-      <p class="mb-0 text-body-tertiary text-opacity-85">Version 1.0</p>
-    </div>
+
   </div>
 </footer>
 
@@ -292,32 +325,42 @@
 
   </main>
 </template>
-
 <script setup>
-
-
-import { onMounted, ref } from 'vue'
-import axios from '@/axios' // Ton axios avec interceptor du token
+import { ref, computed, onMounted } from 'vue'
+import axios from '@/axios'
 
 const user = ref(null)
 const error = ref('')
-const reloadHome = () => {
-  window.location.href = '/'; // recharge complète
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+
+
+const statusMessage = ref('')
+
+const updateStatus = async () => {
+  try {
+await axios.post('/transporteur/update_status', {
+      status: user.value.status
+    })
+    statusMessage.value = 'Statut mis à jour avec succès !'
+    setTimeout(() => statusMessage.value = '', 3000)
+  } catch (err) {
+    console.error('Erreur mise à jour statut :', err)
+    statusMessage.value = 'Erreur lors de la mise à jour du statut.'
+    setTimeout(() => statusMessage.value = '', 3000)
+  }
 }
 
-// Récupérer les données du transporteur connecté
-onMounted(async () => {
-  try {
-    const res = await axios.get('/transporteur/profil_client')
-    user.value = res.data
-  } catch (err) {
-    error.value = 'Session expirée. Veuillez vous reconnecter.'
-    localStorage.removeItem('transporteur_token')
-    setTimeout(() => {
-      window.location.href = '/login_client'
-    }, 1500)
-  }
-})
+
+
+// Redirection vers l'accueil
+const reloadHome = () => {
+  window.location.href = '/'
+}
+
+// Redirection vers le profil
+const reloadprofile = () => {
+  window.location.href = '/edit_client'
+}
 
 // Déconnexion
 const logout_client = async () => {
@@ -330,4 +373,26 @@ const logout_client = async () => {
     window.location.href = '/login_client'
   }
 }
+
+// Génère l'URL de la photo de profil
+const photoProfilUrl = computed(() => {
+  return user.value?.photo_profil
+    ? `${baseURL}/${user.value.photo_profil}`
+    : '/images/default-avatar.png'
+})
+
+// Charger les données utilisateur à l’arrivée
+onMounted(async () => {
+  try {
+    const res = await axios.get('/transporteur/profil_client')
+    user.value = res.data
+  } catch (err) {
+    error.value = 'Session expirée. Veuillez vous reconnecter.'
+    localStorage.removeItem('transporteur_token')
+    setTimeout(() => {
+      window.location.href = '/login_client'
+    }, 1500)
+  }
+})
 </script>
+
