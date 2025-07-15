@@ -8,7 +8,6 @@
             background-image: url(../../../src/assets/DashboardC/assets/img/bg/login-admin.webp);
           "
         ></div>
-        <!--/.bg-holder-->
       </div>
       <div class="col-lg-6">
         <div class="row flex-center h-100 g-0 px-4 px-sm-0">
@@ -49,8 +48,8 @@
                   placeholder="Mot de passe"
                   v-model="password"
                   data-password-input="data-password-input"
-                /><span class="fas fa-key text-body fs-9 form-icon"></span
-                ><button
+                /><span class="fas fa-key text-body fs-9 form-icon"></span>
+                <button
                   class="btn px-3 py-0 h-100 position-absolute top-0 end-0 fs-7 text-body-tertiary"
                   data-password-toggle="data-password-toggle"
                 >
@@ -78,22 +77,27 @@
               </div>
             </div>
             <button class="btn btn-primary w-100 mb-3" @click="login">Se connecter</button>
-            <!-- <div class="text-center">
-              <a class="fs-9 fw-bold" href="sign-up.html">Create an account</a>
-            </div> -->
           </div>
         </div>
       </div>
     </div>
   </main>
 </template>
+
 <script>
 import axios from 'axios'
+
 export default {
   data() {
     return {
       email: '',
       password: '',
+    }
+  },
+  created() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user && user.role === 'admin') {
+      this.$router.push('/admin/dashboard')
     }
   },
   methods: {
@@ -106,7 +110,6 @@ export default {
 
         const user = response.data.user
 
-        // Only allow admins to access
         if (user.role !== 'admin') {
           alert("Accès refusé. Vous n'êtes pas un administrateur.")
           return
@@ -116,7 +119,7 @@ export default {
         localStorage.setItem('user', JSON.stringify(user))
 
         this.$router.push('/admin/dashboard')
-        window.location.reload();
+        window.location.reload()
       } catch (error) {
         alert('Échec de la connexion. Vérifiez vos identifiants.')
         console.error(error)
