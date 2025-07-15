@@ -27,19 +27,30 @@
                       <div class="row align-items-center g-3 g-sm-5 text-center text-sm-start">
                         <div class="col-12 col-sm-auto">
                           <input class="d-none" id="avatarFile" type="file" @change="handlePhotoProfil" />
-                          <label class="cursor-pointer avatar avatar-5xl" for="avatarFile">
-                            <img class="rounded-circle"
-                              :src="previewPhotoProfil || `${baseURL}/${form.photo_profil}` || '/images/default-avatar.png'"
-                              alt="photo profil" />
+                          <label class="cursor-pointer avatar avatar-5xl position-relative" for="avatarFile">
+                            <img class="rounded-circle" :src="avatarSrc" alt="photo profil" />
 
+                            <!-- ✅ Icône pour changer -->
+                            <span class="position-absolute bottom-0 end-0 bg-light   p-1 border"
+                              style="transform: translate(25%, -25%); height: 30px; width: 30px;padding: 5px 20px 26px 6px !important;"
+                              title="Changer la photo de profil">
+                              <i class="fas fa-camera text-primary"></i>
+                            </span>
 
+                            <!-- ✅ Icône pour supprimer -->
+                            <span class="position-absolute top-0 end-0 bg-danger p-1 border cursor-pointer"
+                              style="transform: translate(25%, -25%); height: 30px; width: 30px;padding: 5px 20px 26px 8px !important;"
+                              title="Supprimer la photo de profil" @click.prevent="removePhotoProfil">
+                              <i class="fas fa-times text-white"></i>
+                            </span>
                           </label>
+
                         </div>
                         <div class="col-12 col-sm-auto flex-1">
                           <h3>{{ form.nom }}</h3>
                           <p class="text-body-secondary">
-  Inscrit le {{ formattedDateInscription }}
-</p>
+                            Inscrit le {{ formattedDateInscription }}
+                          </p>
 
                         </div>
                       </div>
@@ -118,13 +129,24 @@
                     <div class="form-control bg-light">{{ form.email }}</div>
                   </div>
 
+
+                  <!-- Véhicule -->
                   <div class="col-12 col-lg-6" v-if="!isClient">
                     <label class="form-label" for="vehicule">Véhicule</label>
                     <input class="form-control" v-model="form.vehicule" id="vehicule" type="text" />
+                    <div v-if="form.photo_vehicule" class="mt-2">
+                      <a :href="`${baseURL}/${form.photo_vehicule}`" target="_blank"
+                        class="btn btn-sm btn-outline-primary">Voir photo véhicule</a>
+                    </div>
                   </div>
+                  <!-- Permis -->
                   <div class="col-12 col-lg-6" v-if="!isClient">
                     <label class="form-label" for="permis">Permis (image)</label>
                     <input class="form-control" id="permis" type="file" @change="handlePermis" />
+                    <div v-if="form.permis" class="mt-2">
+                      <a :href="`${baseURL}/${form.permis}`" target="_blank" class="btn btn-sm btn-outline-primary">Voir
+                        permis</a>
+                    </div>
                   </div>
 
                   <div class="col-12 col-lg-6">
@@ -139,9 +161,14 @@
                     <label class="form-label" for="photo_vehicule">Photo Véhicule</label>
                     <input class="form-control" id="photo_vehicule" type="file" @change="handlePhotoVehicule" />
                   </div>
+                  <!-- Carte Grise -->
                   <div class="col-12 col-lg-6" v-if="!isClient">
                     <label class="form-label" for="carte_grise">Carte Grise</label>
                     <input class="form-control" id="carte_grise" type="file" @change="handleCarteGrise" />
+                    <div v-if="form.carte_grise" class="mt-2">
+                      <a :href="`${baseURL}/${form.carte_grise}`" target="_blank"
+                        class="btn btn-sm btn-outline-primary">Voir carte grise</a>
+                    </div>
                   </div>
                   <div class="col-12 col-lg-6" v-if="!isClient">
                     <label class="form-label">Date fin essai</label>
@@ -215,6 +242,28 @@ const handleCarteGrise = (e) => {
 const handlePermis = (e) => {
   permisFile.value = e.target.files[0]
 }
+
+
+const avatarSrc = computed(() => {
+  if (previewPhotoProfil.value) return previewPhotoProfil.value
+  if (form.value.photo_profil) return `${baseURL}/${form.value.photo_profil}`
+  return '/avatar.png' // ✔️ fallback par défaut
+})
+
+
+const removePhotoProfil = async () => {
+  try {
+    const response = await axios.post('/transporteur/delete_photo_profil')
+    form.value.photo_profil = ''
+    previewPhotoProfil.value = ''
+    photoProfilFile.value = null
+    alert(response.data.message || '✅ Photo supprimée avec succès')
+  } catch (err) {
+    console.error(err)
+    alert('❌ Une erreur est survenue lors de la suppression.')
+  }
+}
+
 
 const handlePhotoProfil = (e) => {
   const file = e.target.files[0]

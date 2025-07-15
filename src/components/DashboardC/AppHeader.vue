@@ -8,7 +8,7 @@
             <li class="nav-item">
               <!-- parent pages-->
               <div class="nav-item-wrapper">
-                <a class="nav-link label-1" href="pages/starter.html" role="button" data-bs-toggle=""
+                <a class="nav-link label-1" href="/dashboard_client" role="button" data-bs-toggle=""
                   aria-expanded="false">
                   <div class="d-flex align-items-center">
                     <span class="nav-link-icon"><span data-feather="pie-chart"></span></span>
@@ -378,7 +378,7 @@ const logout_client = async () => {
 const photoProfilUrl = computed(() => {
   return user.value?.photo_profil
     ? `${baseURL}/${user.value.photo_profil}`
-    : '/images/default-avatar.png'
+    : '/avatar.png'
 })
 
 // Charger les données utilisateur à l’arrivée
