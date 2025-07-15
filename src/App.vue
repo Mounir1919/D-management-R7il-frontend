@@ -24,7 +24,9 @@ export default {
         '/register_client',
         '/forgot_password_client',
         '/reset_password',
-        '/edit_client'
+        '/edit_client',
+        '/admin/dashboard',
+        '/admin/login',
       ]
 
       if (mainLayoutRoutes.includes(this.$route.path)) {

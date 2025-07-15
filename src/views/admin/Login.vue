@@ -116,6 +116,7 @@ export default {
         localStorage.setItem('user', JSON.stringify(user))
 
         this.$router.push('/admin/dashboard')
+        window.location.reload();
       } catch (error) {
         alert('Échec de la connexion. Vérifiez vos identifiants.')
         console.error(error)
