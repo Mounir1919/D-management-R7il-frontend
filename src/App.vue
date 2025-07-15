@@ -15,22 +15,9 @@ const route = useRoute()
 const layout = shallowRef(MainLayout)
 const ready = ref(false)
 
-<<<<<<< HEAD
-      const dashboardLayoutRoutes = [
-        '/dashboard_client',
-        '/login_client',
-        '/register_client',
-        '/forgot_password_client',
-        '/reset_password',
-        '/edit_client',
-        '/admin/dashboard',
-        '/admin/login',
-      ]
-=======
 const mainLayoutRoutes = [
   '/', '/presentation', '/transporteur', '/contact'
 ]
->>>>>>> 9fb67df9a66f881ef5d8d57256e053b6e8cdbf5e
 
 const dashboardLayoutRoutes = [
   '/dashboard_client', '/login_client', '/register_client',
