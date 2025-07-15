@@ -15,13 +15,18 @@ const route = useRoute()
 const layout = shallowRef(MainLayout)
 const ready = ref(false)
 
-const mainLayoutRoutes = [
-  '/', '/presentation', '/transporteur', '/contact'
-]
+const mainLayoutRoutes = ['/', '/presentation', '/transporteur', '/contact']
 
 const dashboardLayoutRoutes = [
-  '/dashboard_client', '/login_client', '/register_client',
-  '/forgot_password_client', '/reset_password', '/edit_client'
+  '/dashboard_client',
+  '/login_client',
+  '/register_client',
+  '/forgot_password_client',
+  '/reset_password',
+  '/edit_client',
+  '/admin/login',
+  '/admin/dashboard',
+  '/admin/liste-clients',
 ]
 
 const setLayout = (path) => {
@@ -37,7 +42,10 @@ const setLayout = (path) => {
 
 setLayout(route.path)
 
-watch(() => route.path, (newPath) => {
-  setLayout(newPath)
-})
+watch(
+  () => route.path,
+  (newPath) => {
+    setLayout(newPath)
+  },
+)
 </script>
