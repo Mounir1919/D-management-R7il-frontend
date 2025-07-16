@@ -126,13 +126,14 @@
                 <thead>
                   <tr>
                     <th class="white-space-nowrap fs-9 align-middle ps-0">#</th>
+                    <th class="align-middle text-end pe-0">Photo</th>
                     <th class="align-middle pe-5">Nom</th>
+
                     <th class="align-middle pe-5">Email</th>
                     <th class="align-middle text-end">Validation</th>
                     <th class="align-middle text-end">Inscription</th>
                     <th class="align-middle ps-3">Adresse</th>
                     <th class="align-middle text-end">Téléphone</th>
-                    <th class="align-middle text-end pe-0">Photo</th>
                     <th class="align-middle text-end pe-0">Status</th>
                   </tr>
                 </thead>
@@ -143,9 +144,19 @@
                     class="hover-actions-trigger btn-reveal-trigger position-static"
                   >
                     <td class="align-middle ps-0 py-3">{{ index + 1 }}</td>
+                    <td class="align-middle text-end pe-0">
+                      <img
+                        :src="client.photo_profil ?? '/assets/img/team/avatar.webp'"
+                        alt="photo profil"
+                        class="rounded-circle"
+                        width="40"
+                        height="40"
+                      />
+                    </td>
                     <td class="align-middle white-space-nowrap pe-5 fw-bold text-body-emphasis">
                       {{ client.nom }}
                     </td>
+
                     <td class="align-middle white-space-nowrap pe-5">
                       <a :href="'mailto:' + client.email" class="fw-semibold">{{ client.email }}</a>
                     </td>
@@ -161,15 +172,7 @@
                     <td class="align-middle white-space-nowrap text-end text-body-highlight">
                       {{ client.telephone }}
                     </td>
-                    <td class="align-middle text-end pe-0">
-                      <img
-                        :src="client.photo_profil ?? '/assets/img/team/avatar.webp'"
-                        alt="photo profil"
-                        class="rounded-circle"
-                        width="40"
-                        height="40"
-                      />
-                    </td>
+
                     <td class="align-middle white-space-nowrap text-end text-body-highlight">
                       {{ client.status }}
                     </td>
@@ -200,7 +203,7 @@ function formatDate(dateString) {
 // Fetch clients on component mount
 onMounted(async () => {
   try {
-    const response = await axios.get('/api/clients') // your endpoint
+    const response = await axios.get('http://127.0.0.1:8000/api/clients')
     clients.value = response.data
   } catch (error) {
     console.error('Error fetching clients:', error)
