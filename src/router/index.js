@@ -18,6 +18,7 @@ import client from '@/views/DashboardC/Profile.vue'
 //admin views
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
 import AdminLogin from '@/views/admin/Login.vue'
+import ListeClient from '@/views/admin/client/ListeClient.vue'
 const routes = [
   // Public/template views
   { path: '/', component: HomePage },
@@ -46,50 +47,72 @@ const routes = [
     component: () => import('@/views/GoogleLoginSuccess.vue'),
   },
   //Admin routes
+ {
+    path: '/admin/login',
+    name: 'AdminLogin',
+    component: AdminLogin,
+  },
   {
     path: '/admin/dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard,
     meta: {
-      requiresAuth: true, // Only allow logged-in users
-      requiresAdmin: true, //   // Only allow admin users
+      requiresAuth: true,
+      requiresAdmin: true,
     },
   },
-  { path: '/admin/login', name: 'AdminLogin', component: AdminLogin },
+  {
+  path: '/admin/liste-clients',
+  name: 'ListeClient',
+  component: ListeClient,
+  meta: {
+    requiresAuth: true,
+    requiresAdmin: true
+  }
+},
 ]
-
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-
-
+// ✅ Global route guard
 router.beforeEach(async (to, from, next) => {
-  // S'il n'y a pas besoin d'être connecté, continue
-  if (!to.meta.requiresAuth) return next()
+  const isAdminRoute = to.path.startsWith('/admin')
+  const token = localStorage.getItem('token')
+  const transporteurToken = localStorage.getItem('transporteur_token')
+  const user = JSON.parse(localStorage.getItem('user'))
 
-  const token = localStorage.getItem('transporteur_token')
-
-  if (!token) {
-    return next('/login_client')
-  }
-
-  try {
-    // Appelle une route sécurisée pour valider que le token est bon
-    const response = await fetch('http://127.0.0.1:8000/api/transporteur/profil_client', {
-      headers: {
-        Authorization: `Bearer ${token}`
+  // 🔐 Route protégée
+  if (to.meta.requiresAuth) {
+    // 🔐 Route Admin
+    if (to.meta.requiresAdmin) {
+      if (!token || !user || user.role !== 'admin') {
+        return next('/admin/login')
       }
-    })
+      return next()
+    }
 
-    if (!response.ok) throw new Error('Non autorisé')
+    // 👤 Route Client
+    if (!transporteurToken) {
+      return next('/login_client')
+    }
 
-    next()
-  } catch (error) {
-    // Token invalide ou expiré
-    localStorage.removeItem('transporteur_token')
-    return next('/login_client')
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/transporteur/profil_client', {
+        headers: {
+          Authorization: `Bearer ${transporteurToken}`
+        }
+      })
+      if (!response.ok) throw new Error('Non autorisé')
+      return next()
+    } catch (error) {
+      localStorage.removeItem('transporteur_token')
+      return next('/login_client')
+    }
   }
+
+  // ✅ Pas de meta.requiresAuth → accessible à tous
+  next()
 })
 
 export default router
