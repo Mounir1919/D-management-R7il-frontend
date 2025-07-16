@@ -128,11 +128,12 @@
                     <th class="white-space-nowrap fs-9 align-middle ps-0">#</th>
                     <th class="align-middle pe-5">Nom</th>
                     <th class="align-middle pe-5">Email</th>
-                    <th class="align-middle text-end">Statut</th>
+                    <th class="align-middle text-end">Validation</th>
                     <th class="align-middle text-end">Inscription</th>
                     <th class="align-middle ps-3">Adresse</th>
                     <th class="align-middle text-end">Téléphone</th>
                     <th class="align-middle text-end pe-0">Photo</th>
+                    <th class="align-middle text-end pe-0">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -169,6 +170,9 @@
                         height="40"
                       />
                     </td>
+                    <td class="align-middle white-space-nowrap text-end text-body-highlight">
+                      {{ client.status }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -183,33 +187,23 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import AppHeader from '@/components/admin/AppHeader.vue'
+
+// Reactive variable to hold client list
 const clients = ref([])
 
-const formatDate = (date) => {
-  if (!date) return '-'
-  const d = new Date(date)
-  return d.toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' })
+// Format date
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  return new Date(dateString).toLocaleDateString(undefined, options)
 }
 
+// Fetch clients on component mount
 onMounted(async () => {
-  const token = localStorage.getItem('token')
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/admin/clients', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    })
+    const response = await axios.get('/api/clients') // your endpoint
     clients.value = response.data
   } catch (error) {
-    console.error('Erreur chargement des clients :', error)
+    console.error('Error fetching clients:', error)
   }
 })
 </script>
-
-<style scoped>
-.table td,
-.table th {
-  vertical-align: middle;
-}
-</style>
