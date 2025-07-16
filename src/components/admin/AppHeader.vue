@@ -8,9 +8,10 @@
             <li class="nav-item">
               <!-- parent pages-->
               <div class="nav-item-wrapper">
-                <a
+                <router-link
                   class="nav-link label-1"
-                  href="pages/starter.html"
+                  to="/admin/dashboard"
+                  @click.prevent="reloadDashboard"
                   role="button"
                   data-bs-toggle=""
                   aria-expanded="false"
@@ -22,7 +23,7 @@
                       ><span class="nav-link-text">Dashboard</span></span
                     >
                   </div>
-                </a>
+                </router-link>
               </div>
             </li>
 
@@ -123,7 +124,7 @@
                     <div class="dropdown-indicator-icon-wrapper">
                       <span class="fas fa-caret-right dropdown-indicator-icon"></span>
                     </div>
-                    <span class="nav-link-icon"><span data-feather="lock"></span></span>
+                    <span class="nav-link-icon"><span data-feather="grid"></span></span>
                     <span class="nav-link-text">Gestion Client</span>
                   </div>
                 </a>
@@ -136,7 +137,11 @@
                     <li class="collapsed-nav-item-title d-none">Gestion Client</li>
 
                     <li class="nav-item">
-                      <router-link class="nav-link" to="/admin/liste-clients">
+                      <router-link
+                        class="nav-link"
+                        to="/admin/liste-clients"
+                        @click.prevent="reloadListClient"
+                      >
                         <div class="d-flex align-items-center">
                           <span class="nav-link-text">Liste des clients</span>
                         </div>
@@ -201,7 +206,7 @@
                     <div class="dropdown-indicator-icon-wrapper">
                       <span class="fas fa-caret-right dropdown-indicator-icon"></span>
                     </div>
-                    <span class="nav-link-icon"><span data-feather="lock"></span></span>
+                    <span class="nav-link-icon"><span data-feather="truck"></span></span>
                     <span class="nav-link-text">Gestion Transporteur</span>
                   </div>
                 </a>
@@ -210,6 +215,162 @@
                     class="nav collapse parent"
                     data-bs-parent="#navbarVerticalCollapse"
                     id="nv-transporteur"
+                  >
+                    <li class="collapsed-nav-item-title d-none">Authentication</li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-in.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign in</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-up.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign up</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-out.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign out</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/forgot-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Forgot password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/reset-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Reset password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/lock-screen.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Lock screen</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/2FA.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">2FA</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- gestion reservation-->
+              <div class="nav-item-wrapper">
+                <a
+                  class="nav-link dropdown-indicator label-1"
+                  href="#nv-reservation"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="nv-reservation"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown-indicator-icon-wrapper">
+                      <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                    </div>
+                    <span class="nav-link-icon"><span data-feather="calendar"></span></span>
+                    <span class="nav-link-text">Gestion Reservation</span>
+                  </div>
+                </a>
+                <div class="parent-wrapper label-1">
+                  <ul
+                    class="nav collapse parent"
+                    data-bs-parent="#navbarVerticalCollapse"
+                    id="nv-reservation"
+                  >
+                    <li class="collapsed-nav-item-title d-none">Authentication</li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-in.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign in</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-up.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign up</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/sign-out.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Sign out</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/forgot-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Forgot password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/reset-password.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Reset password</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/lock-screen.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Lock screen</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages/authentication/simple/2FA.html">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">2FA</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- gestion utilisateur-->
+              <div class="nav-item-wrapper">
+                <a
+                  class="nav-link dropdown-indicator label-1"
+                  href="#nv-utilisateur"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="nv-utilisateur"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown-indicator-icon-wrapper">
+                      <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                    </div>
+                    <span class="nav-link-icon"><span data-feather="users"></span></span>
+                    <span class="nav-link-text">Gestion Utilisateur</span>
+                  </div>
+                </a>
+                <div class="parent-wrapper label-1">
+                  <ul
+                    class="nav collapse parent"
+                    data-bs-parent="#navbarVerticalCollapse"
+                    id="nv-utilisateur"
                   >
                     <li class="collapsed-nav-item-title d-none">Authentication</li>
 
@@ -293,7 +454,7 @@
           >
             <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
           </button>
-          <a class="navbar-brand me-1 me-sm-3" href="index-1.html">
+          <a class="navbar-brand me-1 me-sm-3" href="/" @click.prevent="reloadhomepage">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
                 <img
@@ -563,25 +724,35 @@
   </main>
 </template>
 
-<script>
-export default {
-  methods: {
-    logoutAdmin() {
-      const token = localStorage.getItem('token')
+<script setup>
+import { useRouter } from 'vue-router'
 
-      fetch('http://127.0.0.1:8000/api/admin/logout', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      }).finally(() => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        this.$router.push('/admin/login')
-      })
+const router = useRouter()
+
+function logoutAdmin() {
+  const token = localStorage.getItem('token')
+
+  fetch('http://127.0.0.1:8000/api/admin/logout', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-  },
+  }).finally(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    router.push('/admin/login')
+  })
+}
+
+const reloadListClient = () => {
+  window.location.href = '/admin/liste-clients'
+}
+const reloadhomepage = () => {
+  window.location.href = '/'
+}
+const reloadDashboard = () => {
+  window.location.href = '/admin/dashboard'
 }
 </script>
