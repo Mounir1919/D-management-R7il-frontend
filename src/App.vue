@@ -27,6 +27,7 @@ const dashboardLayoutRoutes = [
   '/admin/login',
   '/admin/dashboard',
   '/admin/liste-clients',
+  '/admin/clients',
 ]
 
 const setLayout = (path) => {

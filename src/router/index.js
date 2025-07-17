@@ -70,6 +70,15 @@ const routes = [
       requiresAdmin: true,
     },
   },
+  {
+    path: '/admin/clients/:id',
+    name: 'ClientDetails',
+    component: () => import('@/views/admin/client/DetailsClient.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
+  },
 ]
 const router = createRouter({
   history: createWebHistory(),

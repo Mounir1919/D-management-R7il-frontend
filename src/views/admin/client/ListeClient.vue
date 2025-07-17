@@ -139,11 +139,11 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(client, index) in clients"
+                    v-for="client in clients"
                     :key="client.email"
                     class="hover-actions-trigger btn-reveal-trigger position-static"
                   >
-                    <td class="align-middle ps-0 py-3">{{ index + 1 }}</td>
+                    <td class="align-middle ps-0 py-3">{{ client.id }}</td>
                     <td class="align-middle text-end pe-0">
                       <img
                         :src="
@@ -157,10 +157,14 @@
                         height="40"
                       />
                     </td>
-                    <td class="align-middle white-space-nowrap pe-5 fw-bold text-body-emphasis">
-                      {{ client.nom }}
+                    <td class="align-middle white-space-nowrap pe-5">
+                      <router-link
+                        :to="`/admin/clients/${client.id}`"
+                        class="fw-bold text-decoration-none text-primary"
+                      >
+                        {{ client.nom }}
+                      </router-link>
                     </td>
-
                     <td class="align-middle white-space-nowrap pe-5">
                       <a :href="'mailto:' + client.email" class="fw-semibold">{{ client.email }}</a>
                     </td>
