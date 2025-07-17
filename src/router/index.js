@@ -34,12 +34,12 @@ const routes = [
   { path: '/reset_password', component: ResetPassword },
   { path: '/forgot_password_client', component: ForgotPassword },
   {
-  path: '/edit_client',
-  component: client,
-  meta: {
-    requiresAuth: true
-  }
-},
+    path: '/edit_client',
+    component: client,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 
   {
     path: '/google-login-success',
@@ -47,7 +47,7 @@ const routes = [
     component: () => import('@/views/GoogleLoginSuccess.vue'),
   },
   //Admin routes
- {
+  {
     path: '/admin/login',
     name: 'AdminLogin',
     component: AdminLogin,
@@ -62,14 +62,14 @@ const routes = [
     },
   },
   {
-  path: '/admin/liste-clients',
-  name: 'ListeClient',
-  component: ListeClient,
-  meta: {
-    requiresAuth: true,
-    requiresAdmin: true
-  }
-},
+    path: '/admin/liste-clients',
+    name: 'ListeClient',
+    component: ListeClient,
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
+  },
 ]
 const router = createRouter({
   history: createWebHistory(),
@@ -100,8 +100,8 @@ router.beforeEach(async (to, from, next) => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/transporteur/profil_client', {
         headers: {
-          Authorization: `Bearer ${transporteurToken}`
-        }
+          Authorization: `Bearer ${transporteurToken}`,
+        },
       })
       if (!response.ok) throw new Error('Non autorisé')
       return next()
@@ -116,3 +116,4 @@ router.beforeEach(async (to, from, next) => {
 })
 
 export default router
+//test
