@@ -146,7 +146,11 @@
                     <td class="align-middle ps-0 py-3">{{ index + 1 }}</td>
                     <td class="align-middle text-end pe-0">
                       <img
-                        :src="client.photo_profil ?? '/assets/img/team/avatar.webp'"
+                        :src="
+                          client.photo_profil
+                            ? `http://127.0.0.1:8000/${client.photo_profil}`
+                            : '/assets/img/team/avatar.webp'
+                        "
                         alt="photo profil"
                         class="rounded-circle"
                         width="40"
