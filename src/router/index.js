@@ -19,6 +19,7 @@ import client from '@/views/DashboardC/Profile.vue'
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
 import AdminLogin from '@/views/admin/Login.vue'
 import ListeClient from '@/views/admin/client/ListeClient.vue'
+import ClientDetails from '@/views/admin/client/DetailsClient.vue'
 const routes = [
   // Public/template views
   { path: '/', component: HomePage },
@@ -73,7 +74,7 @@ const routes = [
   {
     path: '/admin/clients/:id',
     name: 'ClientDetails',
-    component: () => import('@/views/admin/client/DetailsClient.vue'),
+    component: ClientDetails,
     meta: {
       requiresAuth: true,
       requiresAdmin: true,
