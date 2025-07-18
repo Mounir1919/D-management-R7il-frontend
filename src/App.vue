@@ -27,13 +27,13 @@ const dashboardLayoutRoutes = [
   '/admin/login',
   '/admin/dashboard',
   '/admin/liste-clients',
-  '/admin/clients',
+  '/admin/clients', // préfixe commun à /admin/clients/:id
 ]
 
 const setLayout = (path) => {
   if (mainLayoutRoutes.includes(path)) {
     layout.value = MainLayout
-  } else if (dashboardLayoutRoutes.includes(path)) {
+  } else if (dashboardLayoutRoutes.some((prefix) => path.startsWith(prefix))) {
     layout.value = DashboardLayout
   } else {
     layout.value = MainLayout
