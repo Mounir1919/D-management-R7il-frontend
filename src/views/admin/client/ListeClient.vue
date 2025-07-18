@@ -128,7 +128,6 @@
                     <th class="white-space-nowrap fs-9 align-middle ps-0">#</th>
                     <th class="align-middle text-end pe-0">Photo</th>
                     <th class="align-middle pe-5">Nom</th>
-
                     <th class="align-middle pe-5">Email</th>
                     <th class="align-middle text-end">Validation</th>
                     <th class="align-middle text-end">Inscription</th>
@@ -160,6 +159,7 @@
                     <td class="align-middle white-space-nowrap pe-5">
                       <router-link
                         :to="`/admin/clients/${client.id}`"
+                        @click="reloadClientDetails(client.id)"
                         class="fw-bold text-decoration-none text-primary"
                       >
                         {{ client.nom }}
@@ -217,4 +217,7 @@ onMounted(async () => {
     console.error('Error fetching clients:', error)
   }
 })
+const reloadClientDetails = (clientId) => {
+  window.location.href = `/admin/clients/${clientId}`
+}
 </script>
