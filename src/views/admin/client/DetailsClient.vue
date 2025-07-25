@@ -33,7 +33,11 @@
                         <div class="avatar avatar-5xl">
                           <img
                             class="rounded-circle"
-                            :src="client.photo_profil ? `http://127.0.0.1:8000/${client.photo_profil}` : '/assets/img/team/avatar.webp'"
+                            :src="
+                              client.photo_profil
+                                ? `http://127.0.0.1:8000/${client.photo_profil}`
+                                : '/assets/img/team/avatar.webp'
+                            "
                             alt="Photo de profil"
                             width="100"
                             height="100"
@@ -92,10 +96,10 @@
             </div>
           </div>
         </div>
-
         <div v-else>
           <p>Chargement des détails du client...</p>
         </div>
+
       </div>
     </main>
   </AppHeader>
