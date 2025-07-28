@@ -56,24 +56,51 @@
       <div class="container">
         <div class="header-row justify-content-between flex-row-reverse flex-lg-row">
           <div class="header-misc">
-            <!-- Recherche -->
-            <div id="top-search" class="header-misc-icon">
-              <a href="#" id="top-search-trigger"
-                ><i class="uil uil-search"></i><i class="bi-x-lg"></i
-              ></a>
-            </div>
+
 
             <!-- Bouton d’action -->
-            <div class="header-buttons d-none d-sm-inline-block">
-              <router-link
-                to="/login_client"
-                data-scrollto="#slider"
-                data-offset="-80"
-                class="button button-rounded button-white button-light button-small m-0"
-              >
-                Se Connecter
-              </router-link>
-            </div>
+           <!-- Si PAS connecté -->
+<div class="header-buttons d-none d-sm-inline-block" v-if="!isConnected">
+  <a
+    href="/login_client"
+    class="button button-rounded button-white button-light button-small m-0"
+  >
+    Se Connecter
+  </a>
+</div>
+
+<!-- Si connecté -->
+<div class="dropdown d-none d-sm-inline-block" v-else>
+  <button
+    class="button button-rounded button-white button-light button-small dropdown-toggle"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style="padding: 6px 12px;"
+  >
+    Mon Compte
+
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end shadow">
+    <li>
+      <a class="dropdown-item" href="/dashboard_client">
+        <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="/edit_client">
+        <i class="bi bi-person-lines-fill me-2"></i> Modifier profil
+      </a>
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <a class="dropdown-item text-danger" href="#" @click.prevent="handleLogout">
+        <i class="bi bi-box-arrow-right me-2"></i> Se Déconnecter
+      </a>
+    </li>
+  </ul>
+</div>
+
           </div>
 
           <!-- Menu mobile -->
@@ -97,46 +124,10 @@
                 </router-link>
               </li>
 
-              <li class="menu-item">
-                <router-link class="menu-link" to="#">
-                  <div>Tarifs</div>
-                </router-link>
-                <ul class="sub-menu-container" data-class="up-lg:not-dark">
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="bi-house"></i>Déménagement résidentiel</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="bi-building"></i>Déménagement de bureau</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="bi-globe"></i>Déménagement international</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="fa-solid fa-paw"></i>Transport d’animaux</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="bi-car-front"></i>Transport de voiture</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a class="menu-link" href="#">
-                      <div><i class="bi-truck"></i>Louer un camion</div>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="menu-item" :class="{ current: $route.path.startsWith('/transporteur') }">
-                <router-link class="menu-link" to="/transporteur">
-                  <div>Transporteurs</div>
+
+              <li class="menu-item" :class="{ current: $route.path.startsWith('/service') }">
+                <router-link class="menu-link" to="/service">
+                  <div>Services</div>
                 </router-link>
               </li>
 
@@ -166,9 +157,33 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'HeaderTemplate',
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from '@/axios'
+
+const isConnected = ref(false)
+const user = ref(null)
+
+onMounted(async () => {
+  const token = localStorage.getItem('transporteur_token')
+  if (!token) return
+
+  isConnected.value = true
+
+  try {
+    const res = await axios.get('/transporteur/profil_client')
+    user.value = res.data
+  } catch (err) {
+    console.error('Erreur chargement profil', err)
+    localStorage.removeItem('transporteur_token')
+    window.location.href = '/login_client'
+  }
+})
+
+const handleLogout = () => {
+  localStorage.removeItem('transporteur_token')
+  localStorage.removeItem('transporteur_user')
+  window.location.href = '/'
 }
 </script>
 

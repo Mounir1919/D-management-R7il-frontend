@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ContactPage from '@/views/template/contact.vue'
 import HomePage from '@/views/template/Home.vue'
 import PresentationPage from '@/views/template/presentation.vue'
-import TransporteurPage from '@/views/template/transporteur.vue'
+import ServicePage from '@/views/template/service.vue'
 
 // Dashboard client views
 
@@ -14,6 +14,8 @@ import register_client from '@/views/DashboardC/Register.vue'
 import ResetPassword from '@/views/DashboardC/ResetPassword.vue'
 import ForgotPassword from '@/views/DashboardC/ForgotPassword.vue'
 import client from '@/views/DashboardC/Profile.vue'
+import EditReservation from '@/views/DashboardC/EditReservation.vue'
+import Reservations from '@/views/DashboardC/Reservations.vue'
 
 //admin views
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
@@ -23,7 +25,7 @@ const routes = [
   // Public/template views
   { path: '/', component: HomePage },
   { path: '/presentation', component: PresentationPage },
-  { path: '/transporteur', component: TransporteurPage },
+  { path: '/service', component: ServicePage },
   { path: '/contact', component: ContactPage },
 
   // Dashboard client/template views
@@ -40,6 +42,23 @@ const routes = [
       requiresAuth: true,
     },
   },
+{
+  path: '/edit_reservation/:id',
+  name: 'EditReservation',
+  component: EditReservation,
+  meta : {
+    requiresAuth: true,}
+},
+
+
+{
+  path: '/reservations',
+  component: Reservations,
+  meta: {
+    requiresAuth: true,
+  },
+},
+
 
   {
     path: '/google-login-success',

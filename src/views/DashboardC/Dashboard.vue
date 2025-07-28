@@ -41,9 +41,9 @@
 
                   <p v-else class="text-success mb-2">✅ Votre profil est complet et en attente de validation.</p>
 
-                  <router-link to="/edit_client" class="btn btn-sm btn-primary me-2">
+                  <a href="/edit_client" class="btn btn-sm btn-primary me-2">
                     Modifier mon profil
-                  </router-link>
+                  </a>
                   <button @click="logout_client" class="btn btn-sm btn-outline-danger">Se déconnecter</button>
                 </div>
               </div>

@@ -19,82 +19,84 @@
               </div>
             </li>
 
+
+
             <li class="nav-item">
               <!-- label-->
               <p class="navbar-vertical-label">Pages</p>
               <hr class="navbar-vertical-line" />
-              <!-- parent pages-->
-
+            <li class="nav-item">
               <!-- parent pages-->
               <div class="nav-item-wrapper">
-                <a class="nav-link dropdown-indicator label-1" href="#nv-authentication" role="button"
-                  data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-authentication">
+                <a class="nav-link label-1" href="/" role="button">
                   <div class="d-flex align-items-center">
-                    <div class="dropdown-indicator-icon-wrapper">
-                      <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                    </div>
-                    <span class="nav-link-icon"><span data-feather="lock"></span></span>
-                    <span class="nav-link-text">Authentication</span>
+                    <span class="nav-link-icon"><span data-feather="home"></span></span>
+                    <span class="nav-link-text-wrapper"><span class="nav-link-text">Accéder au site</span></span>
                   </div>
                 </a>
-                <div class="parent-wrapper label-1">
-                  <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-authentication">
-                    <li class="collapsed-nav-item-title d-none">Authentication</li>
-
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/sign-in.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Sign in</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/sign-up.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Sign up</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/sign-out.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Sign out</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/forgot-password.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Forgot password</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/reset-password.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Reset password</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/lock-screen.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">Lock screen</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages/authentication/simple/2FA.html">
-                        <div class="d-flex align-items-center">
-                          <span class="nav-link-text">2FA</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </div>
-              <!-- parent pages-->
             </li>
+
+        <li v-if="user && user.type === 'client'" class="nav-item">
+  <div class="nav-item-wrapper">
+    <a class="nav-link label-1" href="/reservations" role="button">
+      <div class="d-flex align-items-center">
+        <span class="nav-link-icon"><span data-feather="calendar"></span></span>
+        <span class="nav-link-text-wrapper"><span class="nav-link-text">Mes Réservations</span></span>
+      </div>
+    </a>
+  </div>
+</li>
+
+
+            <div class="nav-item-wrapper">
+              <a class="nav-link dropdown-indicator label-1" href="#nv-authentification" role="button"
+                data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-authentification">
+                <div class="d-flex align-items-center">
+                  <div class="dropdown-indicator-icon-wrapper">
+                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                  </div>
+                  <span class="nav-link-icon"><span data-feather="lock"></span></span>
+                  <span class="nav-link-text">Authentification</span>
+                </div>
+              </a>
+              <div class="parent-wrapper label-1">
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-authentification">
+                  <li class="collapsed-nav-item-title d-none">Authentification</li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login_client">
+                      <div class="d-flex align-items-center">
+                        <span class="nav-link-text">Connexion</span>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register_client">
+                      <div class="d-flex align-items-center">
+                        <span class="nav-link-text">Inscription</span>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="/forgot_password_client">
+                      <div class="d-flex align-items-center">
+                        <span class="nav-link-text">Mot de passe oublié</span>
+                      </div>
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+
+            <!-- parent pages-->
+            </li>
+
+
+
           </ul>
         </div>
       </div>
@@ -210,19 +212,10 @@
             <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown"
               data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
               <div class="avatar avatar-l">
-                <input
-  type="file"
-  id="avatarUpload"
-  class="d-none"
-  @change="handlePhotoProfil"
-/>
-<label class="cursor-pointer avatar avatar-l" for="avatarUpload">
-  <img
-    class="rounded-circle"
-    :src="previewPhotoProfil || photoProfilUrl"
-    alt="Photo de profil"
-/>
-</label>
+                <input type="file" id="avatarUpload" class="d-none" @change="handlePhotoProfil" />
+                <label class="cursor-pointer avatar avatar-l" for="avatarUpload">
+                  <img class="rounded-circle" :src="previewPhotoProfil || photoProfilUrl" alt="Photo de profil" />
+                </label>
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
@@ -231,36 +224,23 @@
                 <div class="card-body p-0">
                   <div v-if="user" class="text-center pt-4 pb-3">
                     <div class="avatar avatar-xl">
-                      <input
-  type="file"
-  id="avatarUpload"
-  class="d-none"
-  @change="handlePhotoProfil"
-/>
-<label class="cursor-pointer avatar avatar-l" for="avatarUpload">
-  <img
-    class="rounded-circle"
-    :src="previewPhotoProfil || photoProfilUrl"
-    alt="Photo de profil"
-/>
-</label>
+                      <input type="file" id="avatarUpload" class="d-none" @change="handlePhotoProfil" />
+                      <label class="cursor-pointer avatar avatar-l" for="avatarUpload">
+                        <img class="rounded-circle" :src="previewPhotoProfil || photoProfilUrl" alt="Photo de profil" />
+                      </label>
                     </div>
-                    <h6  class="mt-2 text-body-emphasis">{{ user.nom }}</h6>
+                    <h6 class="mt-2 text-body-emphasis">{{ user.nom }}</h6>
                   </div>
-             <div class="mb-3 mx-3" v-if="user">
-  <select
-    class="form-select form-select-sm"
-    v-model="user.status"
-    @change="updateStatus"
-  >
-    <option value="disponible">Disponible</option>
-    <option value="indisponible">Indisponible</option>
-  </select>
+                  <div class="mb-3 mx-3" v-if="user">
+                    <select class="form-select form-select-sm" v-model="user.status" @change="updateStatus">
+                      <option value="disponible">Disponible</option>
+                      <option value="indisponible">Indisponible</option>
+                    </select>
 
-  <div v-if="statusMessage" class="alert alert-success mt-2 p-2 py-1">
-    {{ statusMessage }}
-  </div>
-</div>
+                    <div v-if="statusMessage" class="alert alert-success mt-2 p-2 py-1">
+                      {{ statusMessage }}
+                    </div>
+                  </div>
 
                 </div>
                 <div class="overflow-auto scrollbar" style="height: 10rem">
@@ -272,32 +252,26 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link px-3 d-block" to='/'>
-                        <span class="me-2 text-body align-bottom" data-feather="pie-chart"></span>
+                      <a href="/" class="nav-link px-3 d-block">
+                        <span class="nav-link-icon"><span data-feather="home"></span></span>
                         Accéder au site
-                      </router-link>
+                      </a>
                     </li>
 
 
                   </ul>
                 </div>
 
-                  <hr />
-                 <div class="px-3">
-  <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#" @click="logout_client">
-  <span class="me-2" data-feather="log-out"></span>
-  Se Déconnecter
-</a>
+                <hr />
+                <div class="px-3">
+                  <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#" @click="logout_client">
+                    <span class="me-2" data-feather="log-out"></span>
+                    Se Déconnecter
+                  </a>
 
-</div>
+                </div>
 
-                  <div class="my-2 text-center fw-bold fs-10 text-body-quaternary">
-                    <a class="text-body-quaternary me-1" href="#!">Privacy policy</a>
-                    &bull;
-                    <a class="text-body-quaternary mx-1" href="#!">Terms</a>
-                    &bull;
-                    <a class="text-body-quaternary ms-1" href="#!">Cookies</a>
-                  </div>
+
               </div>
             </div>
           </li>
@@ -307,18 +281,18 @@
 
     <div class="content">
       <slot />
-<footer class="footer position-absolute">
-  <div class="row g-0 justify-content-between align-items-center h-100">
-    <div class="col-12 col-sm-auto text-center">
-      <p class="mb-0 mt-2 mt-sm-0 text-body">
-        Site créé avec passion par <strong><a href="/" @click.prevent="reloadHome">R7il</a></strong>
-        <span class="d-none d-sm-inline-block mx-1">|</span>
-        &copy; 2025
-      </p>
-    </div>
+      <footer class="footer position-absolute">
+        <div class="row g-0 justify-content-between align-items-center h-100">
+          <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 mt-2 mt-sm-0 text-body">
+              Site créé avec passion par <strong><a href="/" @click.prevent="reloadHome">R7il</a></strong>
+              <span class="d-none d-sm-inline-block mx-1">|</span>
+              &copy; 2025
+            </p>
+          </div>
 
-  </div>
-</footer>
+        </div>
+      </footer>
 
     </div>
 
@@ -326,43 +300,41 @@
   </main>
 </template>
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import axios from '@/axios'
 
 const user = ref(null)
 const error = ref('')
 const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
-
-
 const statusMessage = ref('')
 
+// ✔️ Fonction pour exécuter Feather après rendu DOM
+const updateFeatherIcons = () => {
+  nextTick(() => {
+    if (window.feather) {
+      window.feather.replace()
+    }
+  })
+}
+
+// Mise à jour du statut
 const updateStatus = async () => {
   try {
-await axios.post('/transporteur/update_status', {
-      status: user.value.status
+    await axios.post('/transporteur/update_status', {
+      status: user.value.status,
     })
     statusMessage.value = 'Statut mis à jour avec succès !'
-    setTimeout(() => statusMessage.value = '', 3000)
+    setTimeout(() => (statusMessage.value = ''), 3000)
   } catch (err) {
     console.error('Erreur mise à jour statut :', err)
     statusMessage.value = 'Erreur lors de la mise à jour du statut.'
-    setTimeout(() => statusMessage.value = '', 3000)
+    setTimeout(() => (statusMessage.value = ''), 3000)
   }
 }
 
+const reloadHome = () => window.location.href = '/'
+const reloadprofile = () => window.location.href = '/edit_client'
 
-
-// Redirection vers l'accueil
-const reloadHome = () => {
-  window.location.href = '/'
-}
-
-// Redirection vers le profil
-const reloadprofile = () => {
-  window.location.href = '/edit_client'
-}
-
-// Déconnexion
 const logout_client = async () => {
   try {
     await axios.post('/transporteur/logout_client')
@@ -374,14 +346,11 @@ const logout_client = async () => {
   }
 }
 
-// Génère l'URL de la photo de profil
 const photoProfilUrl = computed(() => {
-  return user.value?.photo_profil
-    ? `${baseURL}/${user.value.photo_profil}`
-    : '/avatar.png'
+  return user.value?.photo_profil ? `${baseURL}/${user.value.photo_profil}` : '/avatar.png'
 })
 
-// Charger les données utilisateur à l’arrivée
+// ⚡ Récupérer utilisateur et mettre à jour feather
 onMounted(async () => {
   try {
     const res = await axios.get('/transporteur/profil_client')
@@ -394,5 +363,9 @@ onMounted(async () => {
     }, 1500)
   }
 })
-</script>
 
+// ⚡ Watch pour relancer feather quand user est défini
+watch(user, () => {
+  if (user.value) updateFeatherIcons()
+})
+</script>

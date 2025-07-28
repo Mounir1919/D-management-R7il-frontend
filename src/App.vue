@@ -15,7 +15,11 @@ const route = useRoute()
 const layout = shallowRef(MainLayout)
 const ready = ref(false)
 
-const mainLayoutRoutes = ['/', '/presentation', '/transporteur', '/contact']
+const mainLayoutRoutes = ['/', '/presentation', '/transporteur', '/contact','/service']
+
+const isDashboardDynamicRoute = (path) => {
+  return path.startsWith('/edit_reservation')
+}
 
 const dashboardLayoutRoutes = [
   '/dashboard_client',
@@ -27,18 +31,24 @@ const dashboardLayoutRoutes = [
   '/admin/login',
   '/admin/dashboard',
   '/admin/liste-clients',
+  '/reservation_client',
+  '/reservations'
 ]
 
 const setLayout = (path) => {
   if (mainLayoutRoutes.includes(path)) {
     layout.value = MainLayout
-  } else if (dashboardLayoutRoutes.includes(path)) {
+  } else if (
+    dashboardLayoutRoutes.includes(path) ||
+    isDashboardDynamicRoute(path)
+  ) {
     layout.value = DashboardLayout
   } else {
     layout.value = MainLayout
   }
   ready.value = true
 }
+
 
 setLayout(route.path)
 

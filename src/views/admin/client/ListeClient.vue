@@ -128,7 +128,6 @@
                     <th class="white-space-nowrap fs-9 align-middle ps-0">#</th>
                     <th class="align-middle text-end pe-0">Photo</th>
                     <th class="align-middle pe-5">Nom</th>
-
                     <th class="align-middle pe-5">Email</th>
                     <th class="align-middle text-end">Validation</th>
                     <th class="align-middle text-end">Inscription</th>

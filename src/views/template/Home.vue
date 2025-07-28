@@ -9,364 +9,139 @@
                 <p class="text-white-50">Des solutions rapides, fiables et professionnelles pour tous vos besoins en
                     déménagement.</p>
             </div>
+ <div>
+    <!-- 🔄 Spinner de chargement -->
+    <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
 
-            <div class="row mt-5 justify-content-center">
-                <div class="col-lg-6">
-                    <ul class="nav nav-tabs nav-justified flex-column border-bottom-0 flex-md-row bg-color mt-4"
-                        role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link py-3 active" id="home-moving-tab" data-bs-toggle="tab"
-                                href="#home-moving" role="tab" aria-controls="home-moving" aria-selected="true">
-                                Résidentiel
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link py-3" id="office-moving-tab" data-bs-toggle="tab" href="#office-moving"
-                                role="tab" aria-controls="office-moving" aria-selected="false">
-                                Commercial
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link py-3" id="others-moving-tab" data-bs-toggle="tab" href="#others-moving"
-                                role="tab" aria-controls="others-moving" aria-selected="false">
-                                Autres
-                            </a>
-                        </li>
-                    </ul>
+    <!-- ✅ Section CLIENT -->
+    <div v-else>
+      <div v-if="user?.type === 'client'">
+        <!-- 🔄 Réservation en attente -->
+        <div v-if="reservationStatut === 'en_attente'" class="alert alert-info text-center mt-5">
+          ⏳ Votre demande est en cours de traitement. Un transporteur vous sera attribué prochainement.
+        </div>
 
+        <!-- ✅ Réservation acceptée -->
+        <div v-else-if="reservationStatut === 'acceptee'" class="text-center mt-5">
+          <div class="alert alert-success mb-3">
+            ✅ Votre réservation a été acceptée par un transporteur.<br>
+            🔹 Pour marquer cette course comme <strong>terminée</strong>, veuillez vous rendre dans votre tableau de bord client.
+          </div>
+          <a href="/reservation_client" class="btn btn-outline-primary mt-2">
+            Accéder au tableau de bord client
+          </a>
+        </div>
 
-                    <div class="tab-content rounded-bottom shadow bg-white py-4 px-5">
-                        <div class="tab-pane fade show active" id="home-moving" role="tabpanel"
-                            aria-labelledby="home-moving-tab">
-                            <p class="mb-4">Déménagez en toute tranquillité vers votre nouveau domicile. Veuillez nous
-                                envoyer vos informations et notre équipe vous contactera par courriel dans les plus
-                                brefs délais.</p>
+        <!-- 📝 Formulaire (pas de réservation active ou déjà terminée) -->
+        <div v-else>
+          <div class="row mt-5 justify-content-center">
+            <div class="col-lg-6">
+              <ul class="nav nav-tabs nav-justified flex-column border-bottom-0 flex-md-row bg-color mt-4" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link py-3 active" id="home-moving-tab" data-bs-toggle="tab" href="#home-moving" role="tab" aria-controls="home-moving" aria-selected="true">
+                    Résidentiel
+                  </a>
+                </li>
+              </ul>
 
-                            <div class="form-widget">
-                                <div class="form-result"></div>
-                                <form class="row home-moving-form position-relative mb-0"
-                                    action="https://canvastemplate.com/include/form.php" method="post"
-                                    enctype="multipart/form-data">
+              <div class="tab-content rounded-bottom shadow bg-white py-4 px-5">
+                <div class="tab-pane fade show active" id="home-moving" role="tabpanel" aria-labelledby="home-moving-tab">
+                  <p class="mb-4">Déménagez en toute tranquillité vers votre nouveau domicile. Veuillez nous envoyer vos informations et notre équipe vous contactera par courriel dans les plus brefs délais.</p>
+                  <p class="text-muted">Merci d'indiquer les détails comme l'étage, la surface, présence d'ascenseur, type de bien, etc.</p>
 
-                                    <div class="form-process">
-                                        <div class="css3-spinner">
-                                            <div class="css3-spinner-scaler"></div>
-                                        </div>
-                                    </div>
+                  <div class="form-widget">
+                    <div v-if="success" class="alert alert-success">{{ success }}</div>
+                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-truck"></i></span>
-                                            <input type="text" name="home-moving-form-location-from"
-                                                id="home-moving-form-location-from" class="form-control required"
-                                                value="" placeholder="Départ">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i class="bi-map"></i></span>
-                                            <input type="text" name="home-moving-form-location-to"
-                                                id="home-moving-form-location-to" class="form-control required" value=""
-                                                placeholder="Destination">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-person"></i></span>
-                                            <input type="text" name="home-moving-form-name" id="home-moving-form-name"
-                                                class="form-control required" value="" placeholder="Nom complet">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-envelope"></i></span>
-                                            <input type="email" name="home-moving-form-email"
-                                                id="home-moving-form-email" class="form-control required" value=""
-                                                placeholder="Email">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-telephone-outbound"></i></span>
-                                            <input type="text" name="home-moving-form-phone" id="home-moving-form-phone"
-                                                class="form-control required" value="" placeholder="Téléphone">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-calendar-week"></i></span>
-                                            <input type="text" class="form-control home-date required"
-                                                name="home-moving-form-date" id="home-moving-form-date" value=""
-                                                placeholder="Date du déménagement">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 d-none">
-                                        <input type="text" id="home-moving-form-botcheck"
-                                            name="home-moving-form-botcheck" value="">
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button type="submit" name="home-moving-form-submit"
-                                            class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
-                                            Envoyer la demande
-                                        </button>
-                                    </div>
-
-                                    <input type="hidden" name="prefix" value="home-moving-form-">
-                                    <input type="hidden" name="subject" value="Demande de déménagement résidentiel">
-                                    <input type="hidden" name="html_title" value="Déménagement résidentiel">
-
-                                </form>
-
-                            </div>
+                    <form @submit.prevent="submitForm" class="row home-moving-form position-relative mb-0">
+                      <div class="form-process">
+                        <div class="css3-spinner">
+                          <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="tab-pane fade" id="office-moving" role="tabpanel"
-                            aria-labelledby="office-moving-tab">
-                            <p class="mb-4">
-                                Remplissez ce formulaire pour nous communiquer les détails de votre déménagement
-                                commercial. Recevez rapidement un devis gratuit.
-                            </p>
-                            <div class="form-widget">
-                                <div class="form-result"></div>
-                                <form class="row office-moving-form position-relative mb-0"
-                                    action="https://canvastemplate.com/include/form.php" method="post"
-                                    enctype="multipart/form-data">
+                      </div>
 
-                                    <div class="form-process">
-                                        <div class="css3-spinner">
-                                            <div class="css3-spinner-scaler"></div>
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="text" v-model="form.adresse_depart" class="form-control required" placeholder="Adresse de départ" required />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-truck"></i></span>
-                                            <input type="text" name="office-moving-form-location-from"
-                                                id="office-moving-form-location-from" class="form-control required"
-                                                value="" placeholder="Départ">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="text" v-model="form.ville_depart" class="form-control required" placeholder="Ville de départ" required />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i class="bi-map"></i></span>
-                                            <input type="text" name="office-moving-form-location-to"
-                                                id="office-moving-form-location-to" class="form-control required"
-                                                value="" placeholder="Destination">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="text" v-model="form.adresse_arrivee" class="form-control required" placeholder="Adresse d'arrivée" required />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-person"></i></span>
-                                            <input type="text" name="office-moving-form-name"
-                                                id="office-moving-form-name" class="form-control required" value=""
-                                                placeholder="Nom complet">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="text" v-model="form.ville_arrivee" class="form-control required" placeholder="Ville d'arrivée" required />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-envelope"></i></span>
-                                            <input type="email" name="office-moving-form-email"
-                                                id="office-moving-form-email" class="form-control required" value=""
-                                                placeholder="Email">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="datetime-local" v-model="form.date_heure" class="form-control required" placeholder="Date du déménagement" required />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-telephone-outbound"></i></span>
-                                            <input type="text" name="office-moving-form-phone"
-                                                id="office-moving-form-phone" class="form-control required" value=""
-                                                placeholder="Téléphone">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="number" v-model="form.etage" class="form-control" placeholder="Étage (ex: 3)" />
+                      </div>
 
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-calendar-week"></i></span>
-                                            <input type="text" class="form-control home-date required"
-                                                name="office-moving-form-date" id="office-moving-form-date" value=""
-                                                placeholder="Date du déménagement">
-                                        </div>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <select v-model="form.ascenseur" class="form-select" required>
+                          <option disabled value="">Ascenseur disponible ?</option>
+                          <option value="oui">Oui</option>
+                          <option value="non">Non</option>
+                        </select>
+                      </div>
 
-                                    <div class="col-12 d-none">
-                                        <input type="text" id="office-moving-form-botcheck"
-                                            name="office-moving-form-botcheck" value="">
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="number" v-model="form.surface" class="form-control" placeholder="Surface (en m²)"   min="1" step="0.1"/>
+                      </div>
 
-                                    <div class="col-12">
-                                        <button type="submit" name="office-moving-form-submit"
-                                            class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
-                                            Envoyer la demande
-                                        </button>
-                                    </div>
+                      <div class="col-sm-6 form-group">
+                        <input type="text" v-model="form.type_bien" class="form-control" placeholder="Type de bien (ex: Studio, T3...)" />
+                      </div>
 
-                                    <input type="hidden" name="prefix" value="office-moving-form-">
-                                    <input type="hidden" name="subject" value="Demande de déménagement commercial">
-                                    <input type="hidden" name="html_title" value="Déménagement commercial">
-                                </form>
-                            </div>
-                        </div>
+                      <div class="col-12 form-group">
+                        <textarea v-model="form.details" class="form-control" rows="4" placeholder="Détails supplémentaires (ex: objets fragiles…)" required></textarea>
+                      </div>
 
-                        <div class="tab-pane fade" id="others-moving" role="tabpanel"
-                            aria-labelledby="others-moving-tab">
-                            <div class="form-widget">
-                                <div class="form-result"></div>
-                                <form class="row others-moving-form position-relative mb-0"
-                                    action="https://canvastemplate.com/include/form.php" method="post"
-                                    enctype="multipart/form-data">
-
-                                    <div class="form-process">
-                                        <div class="css3-spinner">
-                                            <div class="css3-spinner-scaler"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><img
-                                                    src="/template/demos/movers/images/baggage.png" height="18"
-                                                    alt="Icône bagage"></span>
-                                            <select class="required form-select" name="others-moving-form-service"
-                                                id="others-moving-form-service">
-                                                <option value="" disabled selected>-- Sélectionnez un service --
-                                                </option>
-                                                <option value="International Moving">Déménagement international</option>
-                                                <option value="Pet Moving">Transport d’animaux</option>
-                                                <option value="Car Moving">Transport de voiture</option>
-                                                <option value="Hire Mover Truck">Location de camion</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-boxes"></i></span>
-                                            <input type="text" name="others-moving-form-item"
-                                                id="others-moving-form-item" class="form-control required" value=""
-                                                placeholder="Objet à transporter">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text text-muted bg-transparent"><i
-                                                    class="bi-person-circle1"></i></span>
-                                            <select class="required form-select" name="others-moving-form-movers"
-                                                id="others-moving-form-movers">
-                                                <option value="" disabled selected>-- Nombre de déménageurs --</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-truck"></i></span>
-                                            <input type="text" name="others-moving-form-location-from"
-                                                id="others-moving-form-location-from" class="form-control required"
-                                                value="" placeholder="Départ">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i class="bi-map"></i></span>
-                                            <input type="text" name="others-moving-form-location-to"
-                                                id="others-moving-form-location-to" class="form-control required"
-                                                value="" placeholder="Destination">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-person"></i></span>
-                                            <input type="text" name="others-moving-form-name"
-                                                id="others-moving-form-name" class="form-control required" value=""
-                                                placeholder="Nom complet">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-envelope"></i></span>
-                                            <input type="email" name="others-moving-form-email"
-                                                id="others-moving-form-email" class="form-control required" value=""
-                                                placeholder="Email">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-telephone-outbound"></i></span>
-                                            <input type="text" name="others-moving-form-phone"
-                                                id="others-moving-form-phone" class="form-control required" value=""
-                                                placeholder="Téléphone">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-transparent"><i
-                                                    class="bi-calendar-week"></i></span>
-                                            <input type="text" class="form-control home-date required"
-                                                name="others-moving-form-date" id="others-moving-form-date" value=""
-                                                placeholder="Date du service">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 d-none">
-                                        <input type="text" id="others-moving-form-botcheck"
-                                            name="others-moving-form-botcheck" value="">
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button type="submit" name="others-moving-form-submit"
-                                            class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
-                                            Envoyer la demande
-                                        </button>
-                                    </div>
-
-                                    <input type="hidden" name="prefix" value="others-moving-form-">
-                                    <input type="hidden" name="subject" value="Demande - Autres services">
-                                    <input type="hidden" name="html_title" value="Autres services">
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
+                          Envoyer la demande
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div class="col-lg-5 d-none d-lg-flex flex-wrap justify-content-center">
-                    <img src="/template/demos/movers/images/2.svg" alt="Image 1" class="d-flex align-self-end ms-5 mt-3">
-                </div>
+              </div>
             </div>
+
+            <div class="col-lg-5 d-none d-lg-flex flex-wrap justify-content-center">
+              <img src="/template/demos/movers/images/2.svg" alt="Illustration déménagement" loading="lazy" class="d-flex align-self-end ms-5 mt-3" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🚫 TRANSPORTEUR NON AUTORISÉ -->
+      <div v-else-if="user?.type === 'transporteur'" class="container py-5 text-center">
+        <div class="alert alert-warning">
+          ❌ Vous êtes connecté en tant que <strong>transporteur</strong>. Cette section est réservée aux clients.
+        </div>
+      </div>
+
+      <!-- 🔒 NON CONNECTÉ -->
+      <div v-else class="container py-5 text-center">
+        <div class="alert alert-info">
+          🔐 Vous devez être connecté pour faire une demande de déménagement.
+        </div>
+        <a href="/login_client" class="btn btn-primary mt-3">Se connecter comme client</a>
+      </div>
+    </div>
+  </div>
         </div>
 
         <div class="svg-separator">
@@ -838,14 +613,7 @@
   <div id="gotoTop" class="uil uil-angle-up"></div>
 </template>
 
-<script>
 
-export default {
-    name: 'HomePage',
-
-}
-
-</script>
  <style scoped>
 .bg-color {
   background-color: rgb(178 59 59) !important;
@@ -855,3 +623,101 @@ export default {
 background-color: rgba(165,42,42, 0.7);
 }
 </style>
+
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from '@/axios'
+
+// États
+const isLoading = ref(true)
+const reservationStatut = ref(null)
+const reservationId = ref(null)
+const success = ref('')
+const error = ref('')
+const user = ref(null)
+
+// Formulaire
+const form = ref({
+  adresse_depart: '',
+  ville_depart: '',
+  adresse_arrivee: '',
+  ville_arrivee: '',
+  date_heure: '',
+  etage: '',
+  ascenseur: '',
+  surface: '',
+  type_bien: '',
+  details: '',
+})
+
+// Chargement initial : profil client + dernière réservation
+onMounted(async () => {
+  const token = localStorage.getItem('transporteur_token')
+  if (!token) {
+    isLoading.value = false
+    return
+  }
+
+  try {
+    const res = await axios.get('/transporteur/profil_client')
+    user.value = res.data
+
+    const res2 = await axios.get(`/reservations/client/${user.value.id}/latest`)
+    reservationId.value = res2.data?.id || null
+    reservationStatut.value = res2.data?.statut || null
+
+    console.log('🟢 Dernière réservation:', res2.data)
+  } catch (err) {
+    console.error('Erreur chargement profil ou réservation', err)
+    localStorage.removeItem('transporteur_token')
+    window.location.href = '/login_client'
+  } finally {
+    isLoading.value = false
+  }
+})
+
+// Envoi du formulaire de réservation
+const submitForm = async () => {
+  error.value = ''
+  success.value = ''
+  isLoading.value = true
+
+  try {
+    const res = await axios.post('/reservations', {
+      client_id: user.value?.id,
+      adresse_depart: form.value.adresse_depart,
+      ville_depart: form.value.ville_depart,
+      adresse_arrivee: form.value.adresse_arrivee,
+      ville_arrivee: form.value.ville_arrivee,
+      date_heure: form.value.date_heure,
+      etage: form.value.etage,
+      ascenseur: form.value.ascenseur === 'oui' ? 1 : 0,
+      surface: String(form.value.surface),
+      type_bien: form.value.type_bien,
+      details: form.value.details,
+    })
+
+    success.value = '✅ Demande envoyée avec succès'
+    form.value = {
+      adresse_depart: '',
+      ville_depart: '',
+      adresse_arrivee: '',
+      ville_arrivee: '',
+      date_heure: '',
+      etage: '',
+      ascenseur: '',
+      surface: '',
+      type_bien: '',
+      details: '',
+    }
+
+    reservationId.value = res.data?.reservation?.id || null
+    reservationStatut.value = 'en_attente'
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Erreur lors de l’envoi de la demande.'
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>
