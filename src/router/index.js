@@ -21,6 +21,7 @@ import Reservations from '@/views/DashboardC/Reservations.vue'
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
 import AdminLogin from '@/views/admin/Login.vue'
 import ListeClient from '@/views/admin/client/ListeClient.vue'
+import ClientDetails from '@/views/admin/client/DetailsClient.vue'
 const routes = [
   // Public/template views
   { path: '/', component: HomePage },
@@ -84,6 +85,15 @@ const routes = [
     path: '/admin/liste-clients',
     name: 'ListeClient',
     component: ListeClient,
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
+  },
+  {
+    path: '/admin/clients/:id',
+    name: 'ClientDetails',
+    component: ClientDetails,
     meta: {
       requiresAuth: true,
       requiresAdmin: true,

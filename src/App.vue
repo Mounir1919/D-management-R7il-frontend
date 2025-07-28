@@ -32,15 +32,16 @@ const dashboardLayoutRoutes = [
   '/admin/dashboard',
   '/admin/liste-clients',
   '/reservation_client',
-  '/reservations'
+  '/reservations',
+  '/admin/clients', // préfixe commun à /admin/clients/:id
 ]
-
 const setLayout = (path) => {
   if (mainLayoutRoutes.includes(path)) {
     layout.value = MainLayout
   } else if (
     dashboardLayoutRoutes.includes(path) ||
-    isDashboardDynamicRoute(path)
+    isDashboardDynamicRoute(path) ||
+    dashboardLayoutRoutes.some((prefix) => path.startsWith(prefix))
   ) {
     layout.value = DashboardLayout
   } else {
