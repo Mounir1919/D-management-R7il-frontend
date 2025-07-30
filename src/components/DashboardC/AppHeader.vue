@@ -100,8 +100,7 @@
           <a class="navbar-brand me-1 me-sm-3" href="index-1.html">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="/assets/img/icons/logo.png" alt="phoenix" width="27" />
-                <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5>
+                <img src="/template/images/33.png" alt="R7il" width="100" />
               </div>
             </div>
           </a>

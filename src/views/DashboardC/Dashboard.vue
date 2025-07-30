@@ -168,7 +168,7 @@ const statutValidation = computed(() => {
     case 'en_attente':
       return user.value.type === 'transporteur'
         ? '⏳ En attente de validation'
-        : '⏳ Profil complet, en attente de validation'
+        : '✅ Validé'
     case 'valide':
       return '✅ Validé'
     case 'refuse':
