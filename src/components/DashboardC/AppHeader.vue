@@ -1,6 +1,6 @@
 <template>
   <main class="main" id="top">
-    <nav class="navbar navbar-vertical navbar-expand-lg" style="display: none">
+<nav class="navbar navbar-vertical navbar-expand-lg" v-show="user">
       <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <!-- scrollbar removed-->
         <div class="navbar-vertical-content">
@@ -82,7 +82,7 @@
         </button>
       </div>
     </nav>
-    <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault" style="display: none">
+<nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault" v-show="user">
       <div class="collapse navbar-collapse justify-content-between">
         <div class="navbar-logo">
           <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
