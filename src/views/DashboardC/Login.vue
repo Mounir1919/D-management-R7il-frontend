@@ -147,12 +147,14 @@ onMounted(() => {
     window.location.href = '/dashboard_client'
   }
 
-  // 🔍 Vérifier les paramètres d'URL
   const urlParams = new URLSearchParams(window.location.search)
   const errorParam = urlParams.get('error')
+  const messageParam = urlParams.get('message')
   const verifiedParam = urlParams.get('verified')
 
-  if (errorParam === 'already_registered_as_client') {
+  if (messageParam) {
+    error.value = decodeURIComponent(messageParam)
+  } else if (errorParam === 'already_registered_as_client') {
     error.value = "Vous êtes déjà inscrit comme client. Veuillez utiliser le bouton 'Connexion Google Client'."
   } else if (errorParam === 'already_registered_as_transporteur') {
     error.value = "Vous êtes déjà inscrit comme transporteur. Veuillez utiliser le bouton 'Connexion Google Transporteur'."
