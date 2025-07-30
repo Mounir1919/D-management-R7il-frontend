@@ -18,7 +18,7 @@ const ready = ref(false)
 const mainLayoutRoutes = ['/', '/presentation', '/transporteur', '/contact','/service']
 
 const isDashboardDynamicRoute = (path) => {
-  return path.startsWith('/edit_reservation')
+  return path.startsWith('/edit_reservation','/edit_reservation_client')
 }
 
 const dashboardLayoutRoutes = [
@@ -33,6 +33,8 @@ const dashboardLayoutRoutes = [
   '/admin/liste-clients',
   '/reservation_client',
   '/reservations',
+  '/notifications',
+  '/historique-reservations',
   '/admin/clients', // préfixe commun à /admin/clients/:id
 ]
 const setLayout = (path) => {

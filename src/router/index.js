@@ -16,6 +16,9 @@ import ForgotPassword from '@/views/DashboardC/ForgotPassword.vue'
 import client from '@/views/DashboardC/Profile.vue'
 import EditReservation from '@/views/DashboardC/EditReservation.vue'
 import Reservations from '@/views/DashboardC/Reservations.vue'
+import Notifications from '@/views/DashboardC/Notifications.vue'
+import NotificationEditStatus from '@/views/DashboardC/NotificationEditStatus.vue'
+import Suivireservations from '@/views/DashboardC/Suivireservations.vue'
 
 //admin views
 import AdminDashboard from '@/views/admin/DashboardAdmin.vue'
@@ -50,7 +53,27 @@ const routes = [
   meta : {
     requiresAuth: true,}
 },
-
+{
+  path: '/historique-reservations',
+  name: 'Suivireservations',
+  component: Suivireservations,
+  meta : {
+    requiresAuth: true,}
+},
+{
+  path: '/edit_reservation_client/:id',
+  name: 'NotificationEditStatus',
+  component: NotificationEditStatus,
+  meta : {
+    requiresAuth: true,}
+},
+{
+  path: '/notifications',
+  name: 'Notifications',
+  component: Notifications,
+  meta : {
+    requiresAuth: true,}
+},
 
 {
   path: '/reservations',

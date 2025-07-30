@@ -9,7 +9,7 @@
                 <p class="text-white-50">Des solutions rapides, fiables et professionnelles pour tous vos besoins en
                     déménagement.</p>
             </div>
- <div>
+  <div>
     <!-- 🔄 Spinner de chargement -->
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
       <div class="spinner-border text-primary" role="status">
@@ -50,6 +50,7 @@
 
               <div class="tab-content rounded-bottom shadow bg-white py-4 px-5">
                 <div class="tab-pane fade show active" id="home-moving" role="tabpanel" aria-labelledby="home-moving-tab">
+
                   <p class="mb-4">Déménagez en toute tranquillité vers votre nouveau domicile. Veuillez nous envoyer vos informations et notre équipe vous contactera par courriel dans les plus brefs délais.</p>
                   <p class="text-muted">Merci d'indiquer les détails comme l'étage, la surface, présence d'ascenseur, type de bien, etc.</p>
 
@@ -57,8 +58,15 @@
                     <div v-if="success" class="alert alert-success">{{ success }}</div>
                     <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
-                    <form @submit.prevent="submitForm" class="row home-moving-form position-relative mb-0">
-                      <div class="form-process">
+                    <!-- Affiche alerte si profil incomplet -->
+                    <div v-if="!isProfileComplete()" class="alert alert-warning mt-4 text-center">
+                      ⚠️ Veuillez compléter votre profil avant de pouvoir faire une demande de déménagement.<br/>
+                      <a href="/edit_client" class="btn btn-primary mt-3">Compléter mon profil</a>
+                    </div>
+
+                    <!-- Formulaire seulement si profil complet -->
+                    <form v-else @submit.prevent="submitForm" class="row home-moving-form position-relative mb-0">
+                      <div class="form-process" v-if="isSubmitting">
                         <div class="css3-spinner">
                           <div class="css3-spinner-scaler"></div>
                         </div>
@@ -97,7 +105,7 @@
                       </div>
 
                       <div class="col-sm-6 form-group">
-                        <input type="number" v-model="form.surface" class="form-control" placeholder="Surface (en m²)"   min="1" step="0.1"/>
+                        <input type="number" v-model="form.surface" class="form-control" placeholder="Surface (en m²)" min="1" step="0.1" />
                       </div>
 
                       <div class="col-sm-6 form-group">
@@ -109,11 +117,12 @@
                       </div>
 
                       <div class="col-12">
-                        <button type="submit" class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
+                        <button :disabled="isSubmitting" type="submit" class="btn bg-color text-white fw-medium w-100 py-2 mt-2">
                           Envoyer la demande
                         </button>
                       </div>
                     </form>
+
                   </div>
                 </div>
               </div>
@@ -720,4 +729,17 @@ const submitForm = async () => {
     isLoading.value = false
   }
 }
+
+const isProfileComplete = () => {
+  if (!user.value) return false
+  // Liste des champs obligatoires pour réserver (à adapter)
+  const requiredFields = ['telephone', 'adresse']
+
+  for (const field of requiredFields) {
+    const val = user.value[field]
+    if (!val || val === '') return false
+  }
+  return true
+}
+
 </script>

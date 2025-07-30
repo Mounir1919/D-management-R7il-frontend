@@ -37,62 +37,42 @@
               </div>
             </li>
 
-        <li v-if="user && user.type === 'client'" class="nav-item">
+            <li v-if="user && user.type === 'client'" class="nav-item">
+              <div class="nav-item-wrapper">
+                <a class="nav-link label-1" href="/reservations" role="button">
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><span data-feather="calendar"></span></span>
+                    <span class="nav-link-text-wrapper"><span class="nav-link-text">Mes Réservations</span></span>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li v-else class="nav-item">
+              <div class="nav-item-wrapper">
+                <a class="nav-link label-1" href="/notifications" role="button">
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><span data-feather="calendar"></span></span>
+                    <span class="nav-link-text-wrapper"><span class="nav-link-text">Mes Notifications</span></span>
+                  </div>
+                </a>
+              </div>
+            </li>
+
+            <li v-if="user && user.type === 'transporteur'" class="nav-item">
+  <!-- parent pages-->
   <div class="nav-item-wrapper">
-    <a class="nav-link label-1" href="/reservations" role="button">
+    <a class="nav-link label-1" href="/historique-reservations" role="button">
       <div class="d-flex align-items-center">
-        <span class="nav-link-icon"><span data-feather="calendar"></span></span>
-        <span class="nav-link-text-wrapper"><span class="nav-link-text">Mes Réservations</span></span>
+        <span class="nav-link-icon"><span data-feather="clock"></span></span>
+        <span class="nav-link-text-wrapper">
+          <span class="nav-link-text">Historique des réservations</span>
+        </span>
       </div>
     </a>
   </div>
 </li>
 
 
-            <div class="nav-item-wrapper">
-              <a class="nav-link dropdown-indicator label-1" href="#nv-authentification" role="button"
-                data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-authentification">
-                <div class="d-flex align-items-center">
-                  <div class="dropdown-indicator-icon-wrapper">
-                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                  </div>
-                  <span class="nav-link-icon"><span data-feather="lock"></span></span>
-                  <span class="nav-link-text">Authentification</span>
-                </div>
-              </a>
-              <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-authentification">
-                  <li class="collapsed-nav-item-title d-none">Authentification</li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="/login_client">
-                      <div class="d-flex align-items-center">
-                        <span class="nav-link-text">Connexion</span>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="/register_client">
-                      <div class="d-flex align-items-center">
-                        <span class="nav-link-text">Inscription</span>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="/forgot_password_client">
-                      <div class="d-flex align-items-center">
-                        <span class="nav-link-text">Mot de passe oublié</span>
-                      </div>
-                    </a>
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-
-            <!-- parent pages-->
             </li>
 
 
@@ -146,67 +126,65 @@
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" style="min-width: 2.25rem" role="button" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-              <span class="d-block" style="height: 20px; width: 20px"><span data-feather="bell"
-                  style="height: 20px; width: 20px"></span></span>
+            <a class="nav-link position-relative" href="#" style="min-width: 2.25rem" role="button"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
+              <span class="d-block" style="height: 20px; width: 20px">
+                <span data-feather="bell" style="height: 20px; width: 20px"></span>
+              </span>
+
+              <!-- Badge rouge toujours visible avec nombre, ou 0 -->
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger text-white"
+                style="margin:7px -24px 0px -7px;width: 18px; height: 18px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0;">
+                {{ unreadCount }}
+              </span>
+
             </a>
+
             <div
               class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret"
               id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
-              <div class="card position-relative border-0">
-                <div class="card-header p-2">
-                  <div class="d-flex justify-content-between">
+              <div class="card position-relative border-0" style="min-width: 320px; max-width: 400px;">
+                <!-- <div class="card-header p-2">
+                  <div class="d-flex justify-content-between align-items-center">
                     <h5 class="text-body-emphasis mb-0">Notifications</h5>
-                    <button class="btn btn-link p-0 fs-9 fw-normal" type="button">
-                      Mark all as read
+                    <button class="btn btn-link p-0 fs-9 fw-normal" type="button" @click="markAllAsRead">
+                      Marquer tout comme lu
                     </button>
                   </div>
-                </div>
+                </div> -->
                 <div class="card-body p-0">
-                  <div class="scrollbar-overlay" style="height: 27rem">
-                    <div class="px-2 px-sm-3 py-3 notification-card position-relative read border-bottom">
-                      <div class="d-flex align-items-center justify-content-between position-relative">
-                        <div class="d-flex">
-                          <div class="avatar avatar-m status-online me-3">
-                            <img class="rounded-circle" src="/assets/img/team/40x40/30.webp" alt="" />
-                          </div>
-                          <div class="flex-1 me-sm-3">
-                            <h4 class="fs-9 text-body-emphasis">Jessie Samson</h4>
-                            <p class="fs-9 text-body-highlight mb-2 mb-sm-3 fw-normal">
-                              <span class="me-1 fs-10">💬</span>
-                              Mentioned you in a comment.
-                              <span class="ms-2 text-body-quaternary text-opacity-75 fw-bold fs-10">10m</span>
-                            </p>
-                            <p class="text-body-secondary fs-9 mb-0">
-                              <span class="me-1 fas fa-clock"></span>
-                              <span class="fw-bold">10:41 AM</span>
-                              August 7,2021
-                            </p>
-                          </div>
+                  <div class="scrollbar-overlay" style="height: 27rem; overflow-y: auto;">
+                    <div v-if="loadingNotifications" class="text-center p-3">Chargement...</div>
+                    <div v-else-if="notifications.length === 0" class="text-center p-3 text-danger fw-bold">
+                      Aucune notification.
+                    </div>
+
+                    <div v-else v-for="notif in notifications" :key="notif.id"
+                      class="px-3 py-2 border-bottom d-flex align-items-start" style="gap: 10px;">
+                      <img class="rounded-circle"
+                        :src="notif.data.client_photo ? `${baseURL}/${notif.data.client_photo}` : '/avatar.png'"
+                        alt="Photo client" style="width: 40px; height: 40px; object-fit: cover;" />
+
+                      <div class="flex-grow-1">
+                        <div class="fs-8 text-body-secondary">
+                          📦 {{ notif.data.message }}
                         </div>
-                        <div class="dropdown notification-dropdown">
-                          <button class="btn fs-10 btn-sm dropdown-toggle dropdown-caret-none transition-none"
-                            type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
-                            aria-expanded="false" data-bs-reference="parent">
-                            <span class="fas fa-ellipsis-h fs-10 text-body"></span>
-                          </button>
-                          <div class="dropdown-menu py-2">
-                            <a class="dropdown-item" href="#!">Mark as unread</a>
-                          </div>
+                        <div class="fs-8 text-muted mt-1" style="font-family: monospace;">
+                          {{ formatDateTimeWithSeconds(notif.created_at) }}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="card-footer p-0 border-top border-translucent border-0">
-                  <div class="my-2 text-center fw-bold fs-10 text-body-tertiary text-opactity-85">
-                    <a class="fw-bolder" href="pages/notifications.html">Notification history</a>
-                  </div>
+                <div class="card-footer p-2 border-top border-translucent text-center fs-8">
+                  <a href="/historique-reservations" class="fw-bold text-decoration-none">
+                    Historique des notifications
+                  </a>
                 </div>
               </div>
             </div>
           </li>
+
 
           <li class="nav-item dropdown">
             <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown"
@@ -269,7 +247,7 @@
                     Se Déconnecter
                   </a>
 
-                </div>
+                </div> <br> <br>
 
 
               </div>
@@ -308,16 +286,63 @@ const error = ref('')
 const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 const statusMessage = ref('')
 
-// ✔️ Fonction pour exécuter Feather après rendu DOM
+const notifications = ref([])
+const loadingNotifications = ref(false)
+
+// Calcul du nombre de notifications non lues (affiché en badge)
+const unreadCount = computed(() => notifications.value.length)
+
+// Récupérer les notifications du transporteur connecté
+const fetchNotifications = async () => {
+  loadingNotifications.value = true
+  try {
+    const res = await axios.get('/transporteur/notifications')
+    notifications.value = res.data
+  } catch (err) {
+    console.error('Erreur récupération notifications :', err)
+  } finally {
+    loadingNotifications.value = false
+  }
+}
+
+// Marquer toutes les notifications comme lues (appel API)
+const markAllAsRead = async () => {
+  try {
+    await axios.post('/transporteur/notifications/read-all')
+    notifications.value = []
+  } catch (err) {
+    console.error('Erreur marquage notifications :', err)
+  }
+}
+
+// URL de la photo de profil utilisateur
+const photoProfilUrl = computed(() => {
+  return user.value?.photo_profil ? `${baseURL}/${user.value.photo_profil}` : '/avatar.png'
+})
+
+
+const formatDateTimeWithSeconds = (dateStr) => {
+  const date = new Date(dateStr)
+  const pad = (n) => n.toString().padStart(2, '0')
+  const day = pad(date.getDate())
+  const month = pad(date.getMonth() + 1)
+  const year = date.getFullYear()
+  const hour = pad(date.getHours())
+  const minute = pad(date.getMinutes())
+  const second = pad(date.getSeconds())
+  return `${day}/${month}/${year} ${hour}:${minute}:${second}`
+}
+
+
+
+// Mise à jour des icônes Feather après DOM
 const updateFeatherIcons = () => {
   nextTick(() => {
-    if (window.feather) {
-      window.feather.replace()
-    }
+    if (window.feather) window.feather.replace()
   })
 }
 
-// Mise à jour du statut
+// Mise à jour du statut utilisateur (exemple)
 const updateStatus = async () => {
   try {
     await axios.post('/transporteur/update_status', {
@@ -335,6 +360,7 @@ const updateStatus = async () => {
 const reloadHome = () => window.location.href = '/'
 const reloadprofile = () => window.location.href = '/edit_client'
 
+// Déconnexion utilisateur
 const logout_client = async () => {
   try {
     await axios.post('/transporteur/logout_client')
@@ -346,15 +372,13 @@ const logout_client = async () => {
   }
 }
 
-const photoProfilUrl = computed(() => {
-  return user.value?.photo_profil ? `${baseURL}/${user.value.photo_profil}` : '/avatar.png'
-})
-
-// ⚡ Récupérer utilisateur et mettre à jour feather
+// Chargement initial : profil + notifications + Feather
 onMounted(async () => {
   try {
     const res = await axios.get('/transporteur/profil_client')
     user.value = res.data
+    await fetchNotifications()  // attendre que les notif soient chargées
+    updateFeatherIcons()
   } catch (err) {
     error.value = 'Session expirée. Veuillez vous reconnecter.'
     localStorage.removeItem('transporteur_token')
@@ -364,7 +388,8 @@ onMounted(async () => {
   }
 })
 
-// ⚡ Watch pour relancer feather quand user est défini
+
+// Relance Feather si user change
 watch(user, () => {
   if (user.value) updateFeatherIcons()
 })

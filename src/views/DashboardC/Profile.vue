@@ -62,14 +62,21 @@
                       </div>
                       <div class="text-end">
                         <h6 class="mb-2 text-body-secondary">Statut</h6>
-                        <h4 class="fs-7 text-body-highlight mb-0">{{ form.statut_validation }}</h4>
+                        <h4 class="fs-7 text-body-highlight mb-0">{{ libelleStatut }}</h4>
                       </div>
-                      <div class="text-end" v-if="!isClient">
+                      <div v-if="form.type === 'transporteur'" class="text-end">
                         <h6 class="mb-2 text-body-secondary">Abonnement actif</h6>
                         <h4 class="fs-7 text-body-highlight mb-0">
                           {{ form.abonnement_actif ? 'Oui' : 'Non' }}
                         </h4>
                       </div>
+                      <div v-if="form.type === 'transporteur'"  class="text-end">
+                        <h6 class="mb-2 text-body-secondary">Type d'abonnement</h6>
+                        <h4 class="fs-7 text-body-highlight mb-0">
+                          {{ libelleAbonnement   }}
+                        </h4>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -170,17 +177,11 @@
                         class="btn btn-sm btn-outline-primary">Voir carte grise</a>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6" v-if="!isClient">
+                  <div class="col-12 col-lg-6" v-if="!isClient && form.type === 'transporteur'">
                     <label class="form-label">Date fin essai</label>
                     <input class="form-control" :value="dateFinEssaiAffichee" disabled />
                   </div>
-                  <div class="col-12 col-lg-6">
-                    <label class="form-label" for="type">Type</label>
-                    <select class="form-select" id="type" v-model="form.type">
-                      <option value="client">Client</option>
-                      <option value="transporteur">Transporteur</option>
-                    </select>
-                  </div>
+
                 </div>
                 <div class="text-end">
                   <button class="btn btn-primary px-7" @click="updateProfile">
@@ -218,7 +219,7 @@ const form = ref({
   photo_profil: '',
   date_inscription: '',
   statut_validation: '',
-  abonnement_actif: false,
+  abonnement_actif: '',
   date_fin_essai: '',
 })
 
@@ -243,13 +244,11 @@ const handlePermis = (e) => {
   permisFile.value = e.target.files[0]
 }
 
-
 const avatarSrc = computed(() => {
   if (previewPhotoProfil.value) return previewPhotoProfil.value
   if (form.value.photo_profil) return `${baseURL}/${form.value.photo_profil}`
   return '/avatar.png' // ✔️ fallback par défaut
 })
-
 
 const removePhotoProfil = async () => {
   try {
@@ -263,7 +262,6 @@ const removePhotoProfil = async () => {
     alert('❌ Une erreur est survenue lors de la suppression.')
   }
 }
-
 
 const handlePhotoProfil = (e) => {
   const file = e.target.files[0]
@@ -282,7 +280,12 @@ const updateProfile = async () => {
 
     for (const key in form.value) {
       if (key !== 'photo_profil' && key !== 'date_inscription') {
-        formData.append(key, form.value[key])
+        // Evite d’envoyer 'null' ou 'undefined' en string
+        let value = form.value[key]
+        if (value === null || value === undefined || value === 'null' || value === 'undefined') {
+          value = ''
+        }
+        formData.append(key, value)
       }
     }
 
@@ -297,18 +300,14 @@ const updateProfile = async () => {
 
     alert(res.data.message)
 
-    // ⚠️ Recharge si le type a changé
-    if (res.data.type_changed) {
-      window.location.reload()
-    } else {
-      await getProfile()
-    }
+    // Recharge systématique après la mise à jour
+    window.location.reload()
+
   } catch (err) {
     console.error(err)
     alert('❌ Erreur lors de la mise à jour.')
   }
 }
-
 
 const formattedDateInscription = computed(() => {
   if (!form.value.date_inscription) return 'Non disponible'
@@ -318,7 +317,6 @@ const formattedDateInscription = computed(() => {
     year: 'numeric',
   })
 })
-
 
 const getProfile = async () => {
   try {
@@ -341,11 +339,68 @@ onMounted(async () => {
   await getProfile()
 })
 
-// ✅ Date formatée si abonnement actif
+// ✅ Date formatée + libellé d’abonnement si actif
 const dateFinEssaiAffichee = computed(() => {
-  if (form.value.abonnement_actif && form.value.date_fin_essai) {
-    return new Date(form.value.date_fin_essai).toLocaleDateString('fr-FR')
+  const abonnement = form.value.abonnement_actif
+  const dateInscription = form.value.date_inscription
+
+  if (abonnement && dateInscription) {
+    const dateDebut = new Date(dateInscription)
+
+    // Ajouter durée selon abonnement
+    switch (abonnement) {
+      case 'free_14_days':
+        dateDebut.setDate(dateDebut.getDate() + 14)
+        break
+      case 'pack_1_month':
+        dateDebut.setMonth(dateDebut.getMonth() + 1)
+        break
+      case 'pack_6_months':
+        dateDebut.setMonth(dateDebut.getMonth() + 6)
+        break
+      case 'pack_1_year':
+        dateDebut.setFullYear(dateDebut.getFullYear() + 1)
+        break
+      default:
+        return 'Non disponible'
+    }
+
+    const dateFormatee = dateDebut.toLocaleDateString('fr-FR')
+
+    // Libellé selon abonnement
+    const libelles = {
+      free_14_days: ' (14 jours gratuits)',
+      pack_1_month: ' (1 mois)',
+      pack_6_months: ' (6 mois)',
+      pack_1_year: ' (1 an)',
+    }
+
+    const libelle = libelles[abonnement] || ''
+    return `${dateFormatee}${libelle}`
   }
+
   return 'Non disponible'
+})
+
+const libelleAbonnement = computed(() => {
+  const mapping = {
+    en_attente: 'Abonnement en attente',
+    free_14_days: 'Pack 14 jours gratuits',
+    pack_1_month: 'Pack 1 mois',
+    pack_6_months: 'Pack 6 mois',
+    pack_1_year: 'Pack 1 an',
+  }
+
+  return mapping[form.value.abonnement_actif] || 'Non défini'
+})
+
+const libelleStatut = computed(() => {
+  const mapping = {
+    en_attente: 'En attente',
+    valide: 'Validé',
+    refuse: 'Refusé',
+    // ajoute d'autres statuts si besoin
+  }
+  return mapping[form.value.statut_validation] || form.value.statut_validation || 'Non défini'
 })
 </script>
