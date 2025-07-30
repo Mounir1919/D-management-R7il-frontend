@@ -132,11 +132,18 @@ router.beforeEach(async (to, from, next) => {
   const isAdminRoute = to.path.startsWith('/admin')
   const token = localStorage.getItem('token')
   const transporteurToken = localStorage.getItem('transporteur_token')
-  const user = JSON.parse(localStorage.getItem('user'))
+  const userStr = localStorage.getItem('user')
+
+  let user = null
+  try {
+    user = JSON.parse(userStr)
+  } catch (e) {
+    user = null
+  }
 
   // 🔐 Route protégée
   if (to.meta.requiresAuth) {
-    // 🔐 Route Admin
+    // ✅ Admin route
     if (to.meta.requiresAdmin) {
       if (!token || !user || user.role !== 'admin') {
         return next('/admin/login')
@@ -144,27 +151,32 @@ router.beforeEach(async (to, from, next) => {
       return next()
     }
 
-    // 👤 Route Client
+    // ✅ Client route
     if (!transporteurToken) {
       return next('/login_client')
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/transporteur/profil_client', {
+      const res = await fetch('http://127.0.0.1:8000/api/transporteur/profil_client', {
         headers: {
           Authorization: `Bearer ${transporteurToken}`,
         },
       })
-      if (!response.ok) throw new Error('Non autorisé')
+
+      if (!res.ok) {
+        throw new Error('Non autorisé')
+      }
+
       return next()
-    } catch (error) {
+    } catch (err) {
       localStorage.removeItem('transporteur_token')
       return next('/login_client')
     }
   }
 
-  // ✅ Pas de meta.requiresAuth → accessible à tous
-  next()
+  // ✅ Route publique
+  return next()
 })
+
 
 export default router
