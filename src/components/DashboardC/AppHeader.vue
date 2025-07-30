@@ -21,21 +21,18 @@
 
 
 
-            <li class="nav-item">
-              <!-- label-->
-              <p class="navbar-vertical-label">Pages</p>
-              <hr class="navbar-vertical-line" />
-            <li class="nav-item">
-              <!-- parent pages-->
-              <div class="nav-item-wrapper">
-                <a class="nav-link label-1" href="/" role="button">
-                  <div class="d-flex align-items-center">
-                    <span class="nav-link-icon"><span data-feather="home"></span></span>
-                    <span class="nav-link-text-wrapper"><span class="nav-link-text">Accéder au site</span></span>
-                  </div>
-                </a>
-              </div>
-            </li>
+<li class="nav-item">
+  <!-- parent pages -->
+  <div class="nav-item-wrapper">
+    <a class="nav-link label-1" href="/" role="button">
+      <div class="d-flex align-items-center">
+        <span class="nav-link-icon"><span data-feather="home"></span></span>
+        <span class="nav-link-text-wrapper"><span class="nav-link-text">Accéder au site</span></span>
+      </div>
+    </a>
+  </div>
+</li>
+
 
             <li v-if="user && user.type === 'client'" class="nav-item">
               <div class="nav-item-wrapper">
@@ -73,10 +70,6 @@
 </li>
 
 
-            </li>
-
-
-
           </ul>
         </div>
       </div>
@@ -100,7 +93,8 @@
           <a class="navbar-brand me-1 me-sm-3" href="index-1.html">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="/template/images/33.png" alt="R7il" width="100" />
+                <img src="/assets/img/icons/logo.png" alt="phoenix" width="27" />
+                <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5>
               </div>
             </div>
           </a>
